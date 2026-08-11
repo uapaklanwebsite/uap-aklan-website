@@ -22,48 +22,8 @@
           <p class="text-4xl font-bold uppercase tracking-[0.01em] text-[#D2B866]">Calendar of Activities</p>
         </div>
 
-        <!-- Year -->
-        <h1 class="mb-12 text-5xl font-extrabold text-white lg:text-6xl">
-            2026
-        </h1>
-        <!-- Months -->
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <button class="activity-btn">January</button>
-            <button class="activity-btn">February</button>
-            <button class="activity-btn">March</button>
-            <button class="activity-btn">April</button>
-            <button class="activity-btn">May</button>
-            <button class="activity-btn">June</button>
-            <button class="activity-btn">July</button>
-            <button class="activity-btn">August</button>
-            <button class="activity-btn">September</button>
-            <button class="activity-btn">October</button>
-            <button class="activity-btn">November</button>
-            <button class="activity-btn">December</button>
-
-        </div>
-
-        <!-- Year -->
-        <h1 class="mb-12 text-5xl font-extrabold text-white lg:text-6xl mt-16">
-            2027
-        </h1>
-        <!-- Months -->
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-
-            <button class="activity-btn">January</button>
-            <button class="activity-btn">February</button>
-            <button class="activity-btn">March</button>
-            <button class="activity-btn">April</button>
-            <button class="activity-btn">May</button>
-            <button class="activity-btn">June</button>
-            <button class="activity-btn">July</button>
-            <button class="activity-btn">August</button>
-            <button class="activity-btn">September</button>
-            <button class="activity-btn">October</button>
-            <button class="activity-btn">November</button>
-            <button class="activity-btn">December</button>
-
-        </div>
+        <!-- Calendar Container (populated by JS) -->
+        <div id="activitiesCalendar"></div>
 
     </div>
  </section>
@@ -73,5 +33,6 @@
 
   <!-- Shared App JS Module -->
   <script type="module" src="/assets/js/app.js"></script>
+  <script type="module" src="/assets/js/activities-page.js"></script>
 </body>
 </html>

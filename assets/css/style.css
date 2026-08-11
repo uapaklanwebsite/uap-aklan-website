@@ -56,3 +56,11 @@
     hover:bg-[#164635]
     hover:border-[#D2B866];
 }
+
+.activity-btn-active {
+    @apply border-[#D2B866] bg-[#0E3A2D];
+}
+
+.activity-btn-disabled {
+    @apply opacity-40 cursor-not-allowed pointer-events-none border-[#D4AF37]/10 bg-[#0A2A20] text-gray-500;
+}

@@ -94,12 +94,6 @@
       </div>
     </div>
   </section>
-  <script lang="ts">
-    const officers = Array.from({ length: 6 }, (_, i) => ({
-      id: i + 1
-    }));
-  </script>
-
   <section id="officers" class="bg-gradient-to-b from-[#030C09] via-[#0D3628] to-[#030C09] py-20 lg:py-28 border-y border-[#D2B866]">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
 
@@ -122,22 +116,9 @@
 
       <!-- Officer Grid -->
       <div
+        id="homeOfficersGrid"
         class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-6"
-      >
-        {#each officers as officer}
-          <div
-            class="group overflow-hidden rounded-lg border border-[#D4AF37]/20 bg-[#0C2D22] transition hover:-translate-y-1 hover:border-[#D4AF37]"
-          >
-            <div
-              class="aspect-[3/4] bg-[#1C4C3B] flex items-center justify-center"
-            >
-              <span class="text-sm text-gray-400">
-                Image
-              </span>
-            </div>
-          </div>
-        {/each}
-      </div>
+      ></div>
 
       <!-- Button -->
       <div class="mt-12">
@@ -167,33 +148,11 @@
             <tr class="border-y border-[#D4AF37]/20">
                 <th class="py-5 text-left text-xs font-semibold uppercase tracking-widest text-[#D2B866]">Name</th>
                 <th class="py-5 text-left text-xs font-semibold uppercase tracking-widest text-[#D2B866]">Based In</th>
-                <th class="py-5 text-center text-xs font-semibold uppercase tracking-widest text-[#D2B866]">Social</th>
+                <th class="py-5 text-center text-xs font-semibold uppercase tracking-widest text-[#D2B866]">Email</th>
             </tr>
           </thead>
           <!-- Body -->
-          <tbody>
-            <!-- Row -->
-            <tr class="border-b border-white/10 hover:bg-white/5 transition">
-              <td class="py-6 font-medium text-white">Arch. Maria Santos</td>
-              <td class="py-6 text-gray-300">Kalibo, Aklan</td>
-              <td class="py-6 text-center">
-                <a href="#" class="inline-flex h-10 w-10 items-center justify-center text-[#062E23] transition hover:scale-110">
-                  <!-- Facebook Icon -->
-                  <img src="/assets/img/fblogo.png" alt="" class="w-8">
-                </a>
-              </td>
-            </tr>
-            <!-- Duplicate rows -->
-            <tr class="border-b border-white/10 hover:bg-white/5 transition">
-              <td class="py-6 font-medium text-white">Arch. Jose Reyes</td>
-              <td class="py-6 text-gray-300">Malay, Aklan</td>
-              <td class="py-6 text-center">
-                <a href="#" class="inline-flex h-10 w-10 items-center justify-center text-[#062E23] transition hover:scale-110">
-                  <!-- Facebook Icon -->
-                  <img src="/assets/img/fblogo.png" alt="" class="w-8">
-                </a>
-              </td>
-            </tr>
+          <tbody id="homeMembersList">
           </tbody>
         </table>
       </div>
@@ -217,22 +176,12 @@
               <div class="h-px w-14 bg-[#D2B866]"></div>
               <p class="text-xs font-semibold uppercase tracking-[0.25em] text-[#D2B866]">Calendar of Activities</p>
           </div>
-          <!-- Month Buttons -->
-          <div class="flex max-w-md flex-col gap-6">
-            <button class="border border-[#D4AF37]/20 bg-[#0C2D22] py-8 text-3xl font-bold uppercase tracking-wide text-[#D2B866] transition duration-300 hover:border-[#D4AF37] hover:bg-[#124132]">
-                August
-            </button>
-            <button class="border border-[#D4AF37]/20 bg-[#0C2D22] py-8 text-3xl font-bold uppercase tracking-wide text-[#D2B866] transition duration-300 hover:border-[#D4AF37] hover:bg-[#124132]">
-                September
-            </button>
-            <button class="border border-[#D4AF37]/20 bg-[#0C2D22] py-8 text-3xl font-bold uppercase tracking-wide text-[#D2B866] transition duration-300 hover:border-[#D4AF37] hover:bg-[#124132]">
-                October
-            </button>
-          </div>
+          <!-- Current Calendar (populated by JS) -->
+          <div id="homeCalendarSection" class="max-w-md mx-auto"></div>
 
           <!-- Link -->
           <div class="mt-12">
-              <a href="/activities" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-[#D2B866] transition hover:gap-4">All Activities <span>→</span></a>
+              <a href="/activities.html" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-[#D2B866] transition hover:gap-4">All Activities <span>→</span></a>
           </div>
       </div>
   </section>

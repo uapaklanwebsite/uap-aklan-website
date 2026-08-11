@@ -3,23 +3,224 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Admin Dashboard - UAP Aklan Chapter." />
-  <title>Admin Dashboard | UAP Aklan Chapter</title>
+  <meta name="description" content="Administrator Dashboard - UAP Aklan Chapter." />
+  <title>Dashboard | Admin UAP Aklan</title>
+  <link rel="icon" type="image/png" href="/assets/img/logo.png" />
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
-<body class="flex flex-col min-h-full bg-gray-50 text-gray-900 antialiased">
+<body class="min-h-full bg-[#030C09] text-gray-100 antialiased flex flex-col lg:flex-row">
 
-  <!-- Header / Navigation Placeholder -->
-  <div id="navbar-placeholder"></div>
+  <!-- Mobile Sidebar Overlay Backdrop -->
+  <div id="admin-sidebar-overlay" class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm hidden lg:hidden"></div>
 
-  <!-- Responsive Main Content Container -->
-  <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
-  </main>
+  <!-- Sidebar Navigation -->
+  <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-50 w-64 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out bg-[#062E23] border-r border-[#D2B866]/20 flex flex-col justify-between">
+    
+    <!-- Top Branding & Nav Links -->
+    <div>
+      <!-- Sidebar Header -->
+      <div class="h-16 flex items-center justify-between px-6 border-b border-[#D2B866]/20 bg-[#031C15]">
+        <a href="/admin/dashboard.html" class="flex items-center gap-3">
+          <img src="/assets/img/logo.png" alt="Logo" class="h-8 w-8 object-contain" />
+          <span class="font-bold text-sm tracking-wider text-white uppercase">UAP Admin</span>
+        </a>
+        <button id="admin-sidebar-close" class="lg:hidden text-gray-400 hover:text-white p-1">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
 
-  <!-- Footer Placeholder -->
-  <div id="footer-placeholder"></div>
+      <!-- Navigation Links -->
+      <nav class="p-4 space-y-1">
+        <a href="/admin/dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold bg-[#0A3428] text-[#D2B866] border border-[#D2B866]/30 shadow-sm">
+          <svg class="h-5 w-5 text-[#D2B866]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+          </svg>
+          <span>Dashboard</span>
+        </a>
 
-  <!-- Shared App JS Module -->
-  <script type="module" src="/assets/js/app.js"></script>
+        <a href="/admin/members.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <span>Members</span>
+        </a>
+
+        <a href="/admin/officers.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          </svg>
+          <span>Officers</span>
+        </a>
+
+        <a href="/admin/gallery.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <span>Gallery</span>
+        </a>
+
+        <a href="/admin/activities.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <span>Activities</span>
+        </a>
+
+        <a href="/admin/history.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Chapter History</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Sidebar Bottom: Logout -->
+    <div class="p-4 border-t border-[#D2B866]/20 bg-[#031C15]">
+      <a href="/admin/login.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-red-400 hover:bg-red-950/40 hover:text-red-300 transition">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <div class="flex-1 lg:pl-64 flex flex-col min-h-screen">
+
+    <!-- Top Header Bar -->
+    <header class="h-16 bg-[#062E23] border-b border-[#D2B866]/20 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30">
+      <div class="flex items-center gap-4">
+        <!-- Mobile Sidebar Hamburger Toggle -->
+        <button id="admin-sidebar-toggle" class="lg:hidden text-[#D2B866] hover:text-white p-2 rounded-md">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+        <span class="text-xs font-semibold uppercase tracking-widest text-[#D2B866]">Admin Panel</span>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <a href="/index.html" target="_blank" class="text-xs text-gray-300 hover:text-[#D2B866] transition flex items-center gap-1">
+          <span>View Public Site</span>
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- Page Content Container -->
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-8">
+
+      <!-- Page Header Title -->
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-bold uppercase tracking-wider text-white">Dashboard</h1>
+        <p class="text-sm text-gray-400 mt-1">Manage the content of the UAP Aklan Chapter website.</p>
+      </div>
+
+      <!-- Summary Stat Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Members Stat Card -->
+        <a href="/admin/members.html" class="group rounded-xl border border-[#D2B866]/20 bg-[#0C2D22] p-6 hover:border-[#D2B866] transition shadow-lg flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-widest text-[#D2B866]">Members</span>
+            <div class="h-10 w-10 rounded-lg bg-[#0A3428] border border-[#D2B866]/20 flex items-center justify-center text-[#D2B866] group-hover:scale-110 transition">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            </div>
+          </div>
+          <div class="mt-4">
+            <p id="statMembers" class="text-3xl font-extrabold text-white">—</p>
+            <p class="text-xs text-gray-400 mt-1">Total Members</p>
+          </div>
+        </a>
+
+        <!-- Officers Stat Card -->
+        <a href="/admin/officers.html" class="group rounded-xl border border-[#D2B866]/20 bg-[#0C2D22] p-6 hover:border-[#D2B866] transition shadow-lg flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-widest text-[#D2B866]">Officers</span>
+            <div class="h-10 w-10 rounded-lg bg-[#0A3428] border border-[#D2B866]/20 flex items-center justify-center text-[#D2B866] group-hover:scale-110 transition">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+          </div>
+          <div class="mt-4">
+            <p id="statOfficers" class="text-3xl font-extrabold text-white">—</p>
+            <p class="text-xs text-gray-400 mt-1">Current Officers</p>
+          </div>
+        </a>
+
+        <!-- Gallery Stat Card -->
+        <a href="/admin/gallery.html" class="group rounded-xl border border-[#D2B866]/20 bg-[#0C2D22] p-6 hover:border-[#D2B866] transition shadow-lg flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-widest text-[#D2B866]">Gallery</span>
+            <div class="h-10 w-10 rounded-lg bg-[#0A3428] border border-[#D2B866]/20 flex items-center justify-center text-[#D2B866] group-hover:scale-110 transition">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+          </div>
+          <div class="mt-4">
+            <p id="statGallery" class="text-3xl font-extrabold text-white">—</p>
+            <p class="text-xs text-gray-400 mt-1">Images</p>
+          </div>
+        </a>
+
+        <!-- Activities Stat Card -->
+        <a href="/admin/activities.html" class="group rounded-xl border border-[#D2B866]/20 bg-[#0C2D22] p-6 hover:border-[#D2B866] transition shadow-lg flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-widest text-[#D2B866]">Activities</span>
+            <div class="h-10 w-10 rounded-lg bg-[#0A3428] border border-[#D2B866]/20 flex items-center justify-center text-[#D2B866] group-hover:scale-110 transition">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+          </div>
+          <div class="mt-4">
+            <p id="statActivities" class="text-3xl font-extrabold text-white">—</p>
+            <p class="text-xs text-gray-400 mt-1">Calendar Entries</p>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Quick Actions Section -->
+      <div class="rounded-xl border border-[#D2B866]/20 bg-[#0C2D22] p-6 shadow-lg">
+        <h2 class="text-base font-bold uppercase tracking-wider text-white mb-4">Quick Actions</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <a href="/admin/members.html" class="flex items-center justify-center gap-2 rounded-lg border border-[#D2B866] bg-[#0E3A2D] py-3 px-4 text-xs font-bold uppercase tracking-wider text-[#D2B866] hover:bg-[#124132] hover:text-white transition">
+            <span>+ Add Member</span>
+          </a>
+
+          <a href="/admin/officers.html" class="flex items-center justify-center gap-2 rounded-lg border border-[#D2B866] bg-[#0E3A2D] py-3 px-4 text-xs font-bold uppercase tracking-wider text-[#D2B866] hover:bg-[#124132] hover:text-white transition">
+            <span>Manage Officers</span>
+          </a>
+
+          <a href="/admin/gallery.html" class="flex items-center justify-center gap-2 rounded-lg border border-[#D2B866] bg-[#0E3A2D] py-3 px-4 text-xs font-bold uppercase tracking-wider text-[#D2B866] hover:bg-[#124132] hover:text-white transition">
+            <span>Upload Gallery Image</span>
+          </a>
+
+          <a href="/admin/activities.html" class="flex items-center justify-center gap-2 rounded-lg border border-[#D2B866] bg-[#0E3A2D] py-3 px-4 text-xs font-bold uppercase tracking-wider text-[#D2B866] hover:bg-[#124132] hover:text-white transition">
+            <span>Add Activity</span>
+          </a>
+
+        </div>
+      </div>
+
+      
+
+    </main>
+
+  </div>
+
+  <script type="module" src="/assets/js/admin.js"></script>
 </body>
 </html>

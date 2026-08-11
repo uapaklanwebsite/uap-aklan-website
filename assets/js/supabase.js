@@ -1,6 +1,8 @@
-/**
- * Supabase Client Initialization Module
- * Placeholder module for future Supabase CRUD, Auth, and Storage integration.
- */
+import { createClient } from '@supabase/supabase-js';
 
-export const supabase = null;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabasePublishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+const supabase = createClient(supabaseUrl, supabasePublishableKey);
+
+export { supabase };

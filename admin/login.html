@@ -3,23 +3,116 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Admin Login - UAP Aklan Chapter." />
+  <meta name="description" content="Administrator Portal Login - UAP Aklan Chapter." />
   <title>Admin Login | UAP Aklan Chapter</title>
+  <link rel="icon" type="image/png" href="/assets/img/logo.png" />
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
-<body class="flex flex-col min-h-full bg-gray-50 text-gray-900 antialiased">
+<body class="min-h-full bg-gradient-to-b from-[#030C09] via-[#0D3628] to-[#030C09] text-gray-100 antialiased flex items-center justify-center p-4">
 
-  <!-- Header / Navigation Placeholder -->
-  <div id="navbar-placeholder"></div>
+  <!-- Background Pattern -->
+  <div class="fixed inset-0 pointer-events-none opacity-10">
+    <div class="h-full w-full cube-grid"></div>
+  </div>
 
-  <!-- Responsive Main Content Container -->
-  <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
-  </main>
+  <div class="relative w-full max-w-md">
 
-  <!-- Footer Placeholder -->
-  <div id="footer-placeholder"></div>
+    <!-- Login Card Container -->
+    <div class="rounded-xl border border-[#D2B866]/30 bg-[#0C2D22]/90 p-8 shadow-2xl backdrop-blur-md">
 
-  <!-- Shared App JS Module -->
-  <script type="module" src="/assets/js/app.js"></script>
+      <!-- Header: Logo & Title -->
+      <div class="text-center mb-8">
+        <img src="/assets/img/logo.png" alt="UAP Aklan Logo" class="h-20 w-20 mx-auto mb-4 object-contain" />
+        <h1 class="text-2xl font-bold uppercase tracking-wider text-white">UAP Aklan Chapter</h1>
+        <p class="text-sm font-semibold uppercase tracking-widest text-[#D2B866] mt-1">Administrator Portal</p>
+      </div>
+
+      <!-- Error Message Banner (Initially Hidden) -->
+      <div id="loginError" class="hidden mb-6 rounded-md border border-red-500/40 bg-red-950/60 p-3 text-sm text-red-300">
+        <div class="flex items-center gap-2">
+          <svg class="h-5 w-5 text-red-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Invalid email or password credentials.</span>
+        </div>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="space-y-6">
+
+        <!-- Email Field -->
+        <div>
+          <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">
+            Email Address <span class="text-[#D2B866]">*</span>
+          </label>
+          <div class="relative">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="admin@uapaklan.org"
+              class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866] transition"
+            />
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div>
+          <label for="password" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">
+            Password <span class="text-[#D2B866]">*</span>
+          </label>
+          <div class="relative">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              placeholder="••••••••••••"
+              class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] pl-4 pr-11 py-3 text-sm text-white placeholder-gray-500 focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866] transition"
+            />
+            <!-- Show/Hide Password Button -->
+            <button
+              type="button"
+              id="togglePassword"
+              class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-[#D2B866] transition focus:outline-none"
+              aria-label="Toggle password visibility"
+            >
+              <!-- Eye Icon (Visible when password hidden) -->
+              <svg class="eye-icon h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              <!-- Eye-Off Icon (Visible when password shown) -->
+              <svg class="eye-off-icon hidden h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858-5.908a10.025 10.025 0 013.682-.863c4.478 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21M3 3l18 18" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Login Button -->
+        <button
+          type="submit"
+          id="loginButton"
+          class="w-full rounded-md border border-[#D2B866] bg-[#0E3A2D] py-3 text-sm font-bold uppercase tracking-widest text-[#D2B866] hover:bg-[#124132] hover:text-white transition duration-300 focus:outline-none focus:ring-2 focus:ring-[#D2B866]"
+        >
+          LOGIN
+        </button>
+
+      </form>
+
+      <!-- Return to Public Site -->
+      <div class="mt-8 text-center border-t border-gray-800 pt-4">
+        <a href="/index.html" class="text-xs text-gray-400 hover:text-[#D2B866] transition inline-flex items-center gap-1">
+          <span>← Return to Public Website</span>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script type="module" src="/assets/js/admin.js"></script>
 </body>
 </html>
