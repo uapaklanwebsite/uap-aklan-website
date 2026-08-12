@@ -1,5 +1,6 @@
 import { getActivities } from './activities.js';
 import { getPublicUrl } from './storage.js';
+import { loadingHtml } from './ui-utils.js';
 
 const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -12,6 +13,8 @@ const MONTHS = [
 document.addEventListener('DOMContentLoaded', async () => {
   const container = document.getElementById('activitiesCalendar');
   if (!container) return;
+
+  container.innerHTML = loadingHtml('Loading activities...');
 
   try {
     const activities = await getActivities();

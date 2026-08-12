@@ -1,7 +1,10 @@
 import { getMembers, addMember, updateMember, deleteMember } from './members.js';
 import { openModal, closeModal } from './admin.js';
+import { filterMembers, normalizeMemberField, escapeHtml, displayMemberField, isMemberEmail, renderMemberEmail } from './member-utils.js';
+import { loadingHtml, setButtonLoading, resetButton } from './ui-utils.js';
 
 let currentMembers = [];
+let isSearchActive = false;
 
 document.addEventListener('DOMContentLoaded', () => {
   initAdminMembers();
@@ -18,8 +21,14 @@ async function initAdminMembers() {
   const successMsg = document.getElementById('memberSuccess');
 
   async function loadMembers() {
+    if (tableBody) {
+      tableBody.innerHTML = `<tr><td colspan="4">${loadingHtml('Loading members...')}</td></tr>`;
+    }
+
     try {
       currentMembers = await getMembers();
+      isSearchActive = false;
+      if (searchInput) searchInput.value = '';
       renderMembers(currentMembers);
     } catch (err) {
       console.error('[Admin Members] Error fetching members:', err);
@@ -35,10 +44,15 @@ async function initAdminMembers() {
 
   function renderMembers(members) {
     if (!tableBody) return;
+
     if (!members || members.length === 0) {
+      const emptyMessage = isSearchActive
+        ? 'No members found.'
+        : 'No members available. Click "+ Add Member" to create one.';
+
       tableBody.innerHTML = `
         <tr>
-          <td colspan="4" class="py-6 text-center text-gray-400">No members found. Click "+ Add Member" to create one.</td>
+          <td colspan="4" class="py-6 text-center text-gray-400">${emptyMessage}</td>
         </tr>
       `;
       return;
@@ -46,14 +60,10 @@ async function initAdminMembers() {
 
     tableBody.innerHTML = members.map(m => `
       <tr class="hover:bg-white/5 transition">
-        <td class="py-4 px-6 font-semibold text-white">${escapeHtml(m.full_name || '')}</td>
-        <td class="py-4 px-6 text-gray-300">${escapeHtml(m.address || '')}</td>
-        <td class="py-4 px-6">
-          ${m.email ? `
-            <a href="mailto:${escapeHtml(m.email)}" class="text-xs text-[#D2B866] hover:underline">
-              ${escapeHtml(m.email)}
-            </a>
-          ` : '<span class="text-gray-500 text-xs">-</span>'}
+        <td class="py-4 px-6 font-semibold text-white break-words">${escapeHtml(m.full_name || '')}</td>
+        <td class="py-4 px-6 text-gray-300 break-words">${escapeHtml(displayMemberField(m.address))}</td>
+        <td class="py-4 px-6 break-all">
+          ${isMemberEmail(m.email) ? renderMemberEmail(m.email) : '<span class="text-gray-500 text-xs">-</span>'}
         </td>
         <td class="py-4 px-6 text-right">
           <div class="flex items-center justify-end gap-2">
@@ -75,7 +85,7 @@ async function initAdminMembers() {
     tableBody.querySelectorAll('[data-delete-id]').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = btn.getAttribute('data-delete-id');
-        handleDeleteMember(id);
+        handleDeleteMember(id, btn);
       });
     });
   }
@@ -87,8 +97,8 @@ async function initAdminMembers() {
     const emailInput = document.getElementById('email');
 
     if (fullNameInput) fullNameInput.value = member.full_name || '';
-    if (addressInput) addressInput.value = member.address || '';
-    if (emailInput) emailInput.value = member.email || '';
+    if (addressInput) addressInput.value = member.address === '-' ? '' : (member.address || '');
+    if (emailInput) emailInput.value = member.email === '-' ? '' : (member.email || '');
 
     if (modalTitle) modalTitle.innerText = 'Edit Member Details';
     if (submitBtn) submitBtn.innerText = 'Update Member';
@@ -96,14 +106,25 @@ async function initAdminMembers() {
     openModal('memberModal');
   }
 
-  async function handleDeleteMember(id) {
+  async function handleDeleteMember(id, btn) {
     if (!confirm('Are you sure you want to delete this member?')) return;
+
+    const originalText = btn ? btn.innerText : 'DELETE';
+    if (btn) {
+      btn.disabled = true;
+      btn.innerText = 'DELETING...';
+    }
+
     try {
       await deleteMember(id);
       await loadMembers();
     } catch (err) {
       console.error('[Admin Members] Error deleting member:', err);
       alert('Failed to delete member: ' + (err.message || err));
+      if (btn) {
+        btn.disabled = false;
+        btn.innerText = originalText;
+      }
     }
   }
 
@@ -114,16 +135,23 @@ async function initAdminMembers() {
       if (successMsg) successMsg.classList.add('hidden');
 
       const id = memberIdInput ? memberIdInput.value : '';
+      const emailValue = document.getElementById('email').value.trim();
+
+      if (emailValue && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+        if (errorMsg) {
+          errorMsg.innerText = 'Please enter a valid email address or leave the field empty.';
+          errorMsg.classList.remove('hidden');
+        }
+        return;
+      }
+
       const data = {
         full_name: document.getElementById('fullName').value.trim(),
-        address: document.getElementById('address').value.trim(),
-        email: document.getElementById('email').value.trim()
+        address: normalizeMemberField(document.getElementById('address').value),
+        email: normalizeMemberField(emailValue)
       };
 
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerText = 'SAVING...';
-      }
+      setButtonLoading(submitBtn, 'SAVING...');
 
       try {
         if (id) {
@@ -138,10 +166,7 @@ async function initAdminMembers() {
           form.reset();
           if (memberIdInput) memberIdInput.value = '';
           if (modalTitle) modalTitle.innerText = 'Member Details';
-          if (submitBtn) {
-            submitBtn.innerText = 'Save Member';
-            submitBtn.disabled = false;
-          }
+          resetButton(submitBtn, 'Save Member');
           closeModal('memberModal');
           if (successMsg) successMsg.classList.add('hidden');
           loadMembers();
@@ -153,10 +178,7 @@ async function initAdminMembers() {
           errorMsg.innerText = 'Error saving member: ' + (err.message || 'Check inputs.');
           errorMsg.classList.remove('hidden');
         }
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerText = id ? 'Update Member' : 'Save Member';
-        }
+        resetButton(submitBtn, id ? 'Update Member' : 'Save Member');
       }
     });
   }
@@ -173,21 +195,11 @@ async function initAdminMembers() {
 
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
-      const q = e.target.value.toLowerCase().trim();
-      const filtered = currentMembers.filter(m => 
-        (m.full_name && m.full_name.toLowerCase().includes(q)) ||
-        (m.address && m.address.toLowerCase().includes(q))
-      );
+      isSearchActive = e.target.value.trim().length > 0;
+      const filtered = filterMembers(currentMembers, e.target.value);
       renderMembers(filtered);
     });
   }
 
   loadMembers();
-}
-
-function escapeHtml(str) {
-  return str.replace(/[&<>"']/g, match => {
-    const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-    return map[match];
-  });
 }

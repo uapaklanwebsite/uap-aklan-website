@@ -38,6 +38,10 @@ async function initDashboardStats() {
     { table: 'activities', el: statActivities },
   ];
 
+  tables.forEach(({ el }) => {
+    if (el) el.textContent = '…';
+  });
+
   await Promise.all(tables.map(async ({ table, el }) => {
     if (!el) return;
     try {
@@ -124,7 +128,7 @@ async function initAdminAuth() {
           }
 
           // Successful login -> Redirect to dashboard.html
-          window.location.href = '/admin/dashboard.html';
+          window.location.href = '/uap-aklan-admin/dashboard.html';
 
         } catch (err) {
           console.error('[Auth] Login exception:', err);

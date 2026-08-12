@@ -1,4 +1,5 @@
 import { getHistory, addHistory, updateHistory } from './history.js';
+import { loadingHtml, setButtonLoading, resetButton } from './ui-utils.js';
 
 let currentHistoryId = null;
 
@@ -13,8 +14,14 @@ async function initAdminHistory() {
   const submitBtn = document.getElementById('historySubmit');
   const errorMsg = document.getElementById('historyError');
   const successMsg = document.getElementById('historySuccess');
+  const loadingEl = document.getElementById('historyLoading');
 
   async function loadHistoryRecord() {
+    if (loadingEl) {
+      loadingEl.classList.remove('hidden');
+      loadingEl.innerHTML = loadingHtml('Loading chapter history...');
+    }
+
     try {
       const historyList = await getHistory();
       if (historyList && historyList.length > 0) {
@@ -25,6 +32,11 @@ async function initAdminHistory() {
       }
     } catch (err) {
       console.error('[Admin History] Error loading history:', err);
+      if (loadingEl) {
+        loadingEl.innerHTML = `<p class="text-red-400 text-sm py-4">Error loading chapter history.</p>`;
+      }
+    } finally {
+      if (loadingEl) loadingEl.classList.add('hidden');
     }
   }
 
@@ -44,10 +56,7 @@ async function initAdminHistory() {
         return;
       }
 
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerText = 'SAVING...';
-      }
+      setButtonLoading(submitBtn, 'Saving...');
 
       try {
         if (currentHistoryId) {
@@ -60,10 +69,7 @@ async function initAdminHistory() {
         if (successMsg) successMsg.classList.remove('hidden');
 
         setTimeout(() => {
-          if (submitBtn) {
-            submitBtn.innerText = 'Save Changes';
-            submitBtn.disabled = false;
-          }
+          resetButton(submitBtn, 'Save Changes');
           if (successMsg) successMsg.classList.add('hidden');
         }, 2000);
 
@@ -73,10 +79,7 @@ async function initAdminHistory() {
           errorMsg.innerText = 'Error saving history: ' + (err.message || err);
           errorMsg.classList.remove('hidden');
         }
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerText = 'Save Changes';
-        }
+        resetButton(submitBtn, 'Save Changes');
       }
     });
   }

@@ -1,6 +1,7 @@
 import { getActivities, addActivity, updateActivity, deleteActivity } from './activities.js';
 import { uploadImage, deleteImage, getPublicUrl } from './storage.js';
 import { openModal, closeModal } from './admin.js';
+import { loadingHtml, setButtonLoading, resetButton } from './ui-utils.js';
 
 let currentActivities = [];
 
@@ -21,6 +22,10 @@ async function initAdminActivities() {
   const successMsg = document.getElementById('activitySuccess');
 
   async function loadActivitiesList() {
+    if (tableBody) {
+      tableBody.innerHTML = `<tr><td colspan="4">${loadingHtml('Loading activities...')}</td></tr>`;
+    }
+
     try {
       currentActivities = await getActivities();
       renderActivities(currentActivities);
@@ -35,7 +40,7 @@ async function initAdminActivities() {
   function renderActivities(list) {
     if (!tableBody) return;
     if (!list || list.length === 0) {
-      tableBody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-gray-400">No activities added yet.</td></tr>`;
+      tableBody.innerHTML = `<tr><td colspan="4" class="py-6 text-center text-gray-400">No activities available.</td></tr>`;
       return;
     }
 
@@ -47,7 +52,7 @@ async function initAdminActivities() {
           <td class="py-4 px-6 text-gray-200 font-medium">${escapeHtml(item.month)}</td>
           <td class="py-4 px-6">
             <div class="flex items-center gap-3">
-              <img src="${publicUrl}" alt="Activity Calendar" class="h-10 w-10 object-contain rounded bg-[#062E23] p-1 border border-[#D2B866]/20" />
+              <img src="${publicUrl}" alt="Activity Calendar" class="h-16 w-auto max-w-[120px] object-contain rounded bg-[#062E23] p-1 border border-[#D2B866]/20" />
               <span class="text-xs text-gray-400 truncate max-w-[150px]">${item.image_path}</span>
             </div>
           </td>
@@ -72,7 +77,7 @@ async function initAdminActivities() {
     tableBody.querySelectorAll('[data-delete-id]').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = btn.getAttribute('data-delete-id');
-        handleDeleteActivity(id);
+        handleDeleteActivity(id, btn);
       });
     });
   }
@@ -88,25 +93,31 @@ async function initAdminActivities() {
     openModal('activityModal');
   }
 
-  async function handleDeleteActivity(id) {
+  async function handleDeleteActivity(id, btn) {
     const activity = currentActivities.find(a => a.activity_id === id);
     if (!activity) return;
 
     if (!confirm('Are you sure you want to delete this activity calendar?')) return;
 
+    const originalText = btn ? btn.innerText : 'DELETE';
+    if (btn) {
+      btn.disabled = true;
+      btn.innerText = 'Deleting...';
+    }
+
     try {
-      // 1. Delete file from Storage first
       if (activity.image_path) {
         await deleteImage('activities', activity.image_path);
       }
-      // 2. Delete database record only after Storage deletion succeeds
       await deleteActivity(id);
-      // 3. Refresh UI only after DB deletion succeeds
       await loadActivitiesList();
-
     } catch (err) {
       console.error('[Admin Activities] Delete error:', err);
       alert('Failed to delete activity: ' + (err.message || err));
+      if (btn) {
+        btn.disabled = false;
+        btn.innerText = originalText;
+      }
     }
   }
 
@@ -127,22 +138,15 @@ async function initAdminActivities() {
         return;
       }
 
-      console.log('[Activity] Selected file:', file);
-
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerText = 'SAVING...';
-      }
+      setButtonLoading(submitBtn, 'Saving...');
 
       let newlyUploadedPath = null;
 
       try {
         let newImagePath = oldPath;
 
-        // 1. Upload compressed WebP image to Storage if new file selected
         if (file) {
           const uploadResult = await uploadImage('activities', file);
-          console.log('[Activity] Upload result:', uploadResult);
 
           if (!uploadResult?.path) {
             throw new Error('No storage path returned from Storage upload.');
@@ -152,13 +156,9 @@ async function initAdminActivities() {
           newImagePath = uploadResult.path;
         }
 
-        console.log('[Activity] Saving image_path:', newImagePath);
-
-        // 2. Insert/Update Database record with storage path
         if (id) {
           await updateActivity(id, { year, month, image_path: newImagePath });
-          
-          // 3. Delete old storage image ONLY after DB update succeeds
+
           if (file && oldPath && oldPath !== newImagePath) {
             try {
               await deleteImage('activities', oldPath);
@@ -170,7 +170,6 @@ async function initAdminActivities() {
           await addActivity({ year, month, image_path: newImagePath });
         }
 
-        // Show success message ONLY after upload + DB write succeed
         if (successMsg) {
           successMsg.innerText = 'Activity calendar saved successfully!';
           successMsg.classList.remove('hidden');
@@ -181,10 +180,7 @@ async function initAdminActivities() {
           if (activityIdInput) activityIdInput.value = '';
           if (oldPathInput) oldPathInput.value = '';
           if (fileInput) fileInput.required = true;
-          if (submitBtn) {
-            submitBtn.innerText = 'Save Activity';
-            submitBtn.disabled = false;
-          }
+          resetButton(submitBtn, 'Save Activity');
           closeModal('activityModal');
           if (successMsg) successMsg.classList.add('hidden');
           loadActivitiesList();
@@ -193,10 +189,8 @@ async function initAdminActivities() {
       } catch (err) {
         console.error('[Admin Activities] Submit/Save error:', err);
 
-        // Orphan file cleanup if DB write failed
         if (newlyUploadedPath) {
           try {
-            console.warn('[Admin Activities] Cleaning up orphaned uploaded image:', newlyUploadedPath);
             await deleteImage('activities', newlyUploadedPath);
           } catch (cleanupErr) {
             console.error('[Admin Activities] Cleanup error:', cleanupErr);
@@ -207,10 +201,7 @@ async function initAdminActivities() {
           errorMsg.innerText = 'Error saving activity: ' + (err.message || err);
           errorMsg.classList.remove('hidden');
         }
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerText = id ? 'Update Activity' : 'Save Activity';
-        }
+        resetButton(submitBtn, id ? 'Update Activity' : 'Save Activity');
       }
     });
   }

@@ -1,7 +1,5 @@
 /**
  * Main App Entry Module for UAP Aklan Website
- * Loads shared header (navbar) and footer components into placeholder containers,
- * then initializes their respective interactive JavaScript behaviors.
  */
 
 import { initNavbar } from './navbar.js';
@@ -10,6 +8,8 @@ import { getOfficersPreview } from './officers.js';
 import { getMembersPreview } from './members.js';
 import { getActivityByYearMonth } from './activities.js';
 import { getPublicUrl } from './storage.js';
+import { escapeHtml, displayMemberField, renderMemberEmail } from './member-utils.js';
+import { loadingHtml } from './ui-utils.js';
 
 function initApp() {
   initNavbar();
@@ -29,13 +29,15 @@ async function loadHomeOfficers() {
   const container = document.getElementById('homeOfficersGrid');
   if (!container) return;
 
+  container.innerHTML = `<div class="col-span-full">${loadingHtml('Loading officers...')}</div>`;
+
   try {
     const officers = await getOfficersPreview(6);
 
     if (!officers || officers.length === 0) {
       container.innerHTML = `
         <div class="col-span-full py-12 text-center text-gray-400">
-          No officers available yet.
+          No officers available.
         </div>
       `;
       return;
@@ -65,13 +67,19 @@ async function loadHomeMembers() {
   const container = document.getElementById('homeMembersList');
   if (!container) return;
 
+  container.innerHTML = `
+    <tr class="border-b border-white/10">
+      <td colspan="3">${loadingHtml('Loading members...')}</td>
+    </tr>
+  `;
+
   try {
     const members = await getMembersPreview(6);
 
     if (!members || members.length === 0) {
       container.innerHTML = `
         <tr class="border-b border-white/10">
-          <td colspan="3" class="py-8 text-center text-gray-400 font-medium">No members available yet.</td>
+          <td colspan="3" class="py-8 text-center text-gray-400 font-medium">No members available.</td>
         </tr>
       `;
       return;
@@ -79,15 +87,9 @@ async function loadHomeMembers() {
 
     container.innerHTML = members.map((m) => `
       <tr class="border-b border-white/10 hover:bg-white/5 transition">
-        <td class="py-6 font-medium text-white">${escapeHtml(m.full_name || '')}</td>
-        <td class="py-6 text-gray-300">${escapeHtml(m.address || '')}</td>
-        <td class="py-6 text-center">
-          ${m.email ? `
-            <a href="mailto:${escapeHtml(m.email)}" class="text-sm text-[#D2B866] hover:underline transition">
-              ${escapeHtml(m.email)}
-            </a>
-          ` : '<span class="text-gray-500">—</span>'}
-        </td>
+        <td class="py-6 font-medium text-white break-words whitespace-normal">${escapeHtml(m.full_name || '')}</td>
+        <td class="py-6 text-gray-300 break-words whitespace-normal">${escapeHtml(displayMemberField(m.address))}</td>
+        <td class="py-6 text-center break-all whitespace-normal">${renderMemberEmail(m.email)}</td>
       </tr>
     `).join('');
   } catch (err) {
@@ -103,6 +105,8 @@ async function loadHomeMembers() {
 async function loadHomeCalendar() {
   const container = document.getElementById('homeCalendarSection');
   if (!container) return;
+
+  container.innerHTML = loadingHtml('Loading calendar...');
 
   const now = new Date();
   const currentYear = now.getFullYear();
@@ -159,14 +163,6 @@ async function loadHomeCalendar() {
   }
 }
 
-function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, (match) => {
-    const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-    return map[match];
-  });
-}
-
-// Execute app initialization when DOM ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initApp);
 } else {

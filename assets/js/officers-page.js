@@ -1,12 +1,12 @@
 import { getOfficers } from './officers.js';
 import { getPublicUrl } from './storage.js';
+import { loadingHtml } from './ui-utils.js';
 
-/**
- * Public Officers Page Script
- */
 document.addEventListener('DOMContentLoaded', async () => {
   const container = document.getElementById('officersGrid');
   if (!container) return;
+
+  container.innerHTML = `<div class="col-span-full">${loadingHtml('Loading officers...')}</div>`;
 
   try {
     const officers = await getOfficers();
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!officers || officers.length === 0) {
       container.innerHTML = `
         <div class="col-span-full py-12 text-center text-gray-400">
-          No officer cards uploaded yet.
+          No officers available.
         </div>
       `;
       return;
@@ -32,5 +32,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }).join('');
   } catch (err) {
     console.error('[Officers Page] Error loading officers:', err);
+    container.innerHTML = `
+      <div class="col-span-full py-12 text-center text-red-400">
+        Error loading officers.
+      </div>
+    `;
   }
 });

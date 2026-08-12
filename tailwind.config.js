@@ -2,7 +2,7 @@
 export default {
   content: [
     './*.html',
-    './admin/**/*.html',
+    './uap-aklan-admin/**/*.html',
     './components/**/*.html',
     './assets/js/**/*.js',
   ],

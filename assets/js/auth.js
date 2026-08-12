@@ -43,13 +43,13 @@ export async function logout() {
   } catch (err) {
     console.error('[Auth] Exception during signout:', err);
   } finally {
-    window.location.href = '/admin/login.html';
+    window.location.href = '/uap-aklan-admin/login.html';
   }
 }
 
 /**
  * Checks if a valid authenticated user exists in Supabase.
- * Redirects to /admin/login.html if no session is active.
+ * Redirects to /uap-aklan-admin/login.html if no session is active.
  * @returns {Promise<Object|null>} The authenticated user object or null.
  */
 export async function requireAuth() {
@@ -58,7 +58,7 @@ export async function requireAuth() {
 
     if (error || !user) {
       console.warn('[Auth] No active session found. Redirecting to login.');
-      window.location.href = '/admin/login.html';
+      window.location.href = '/uap-aklan-admin/login.html';
       return null;
     }
 
@@ -66,14 +66,14 @@ export async function requireAuth() {
     return user;
   } catch (err) {
     console.error('[Auth] Error verifying session:', err);
-    window.location.href = '/admin/login.html';
+    window.location.href = '/uap-aklan-admin/login.html';
     return null;
   }
 }
 
 /**
  * Checks if user is already authenticated when visiting login.html.
- * Redirects to /admin/dashboard.html if session exists.
+ * Redirects to /uap-aklan-admin/dashboard.html if session exists.
  */
 export async function redirectIfAuthenticated() {
   try {
@@ -81,7 +81,7 @@ export async function redirectIfAuthenticated() {
 
     if (user) {
       console.log('[Auth] User already authenticated. Redirecting to dashboard.');
-      window.location.href = '/admin/dashboard.html';
+      window.location.href = '/uap-aklan-admin/dashboard.html';
     }
   } catch (err) {
     console.error('[Auth] Error checking session on login page:', err);

@@ -1,6 +1,7 @@
 import { getOfficers, addOfficer, updateOfficer, deleteOfficer } from './officers.js';
 import { uploadImage, deleteImage, getPublicUrl } from './storage.js';
 import { openModal, closeModal } from './admin.js';
+import { loadingHtml, setButtonLoading, resetButton } from './ui-utils.js';
 
 let currentOfficers = [];
 
@@ -20,6 +21,10 @@ async function initAdminOfficers() {
   const successMsg = document.getElementById('officerSuccess');
 
   async function loadOfficers() {
+    if (container) {
+      container.innerHTML = `<div class="col-span-full">${loadingHtml('Loading officers...')}</div>`;
+    }
+
     try {
       currentOfficers = await getOfficers();
       renderOfficers(currentOfficers);
@@ -34,7 +39,7 @@ async function initAdminOfficers() {
   function renderOfficers(officers) {
     if (!container) return;
     if (!officers || officers.length === 0) {
-      container.innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">No officer cards uploaded yet.</div>`;
+      container.innerHTML = `<div class="col-span-full text-center text-gray-400 py-8">No officers available.</div>`;
       return;
     }
 
@@ -42,8 +47,8 @@ async function initAdminOfficers() {
       const publicUrl = getPublicUrl('officers', o.image_path);
       return `
         <div class="rounded-xl border border-[#D2B866]/20 bg-[#0C2D22] overflow-hidden shadow-lg flex flex-col justify-between">
-          <div class="aspect-[3/4] bg-[#1C4C3B] relative flex items-center justify-center overflow-hidden">
-            <img src="${publicUrl}" alt="Officer Card" class="w-full h-full object-cover" />
+          <div class="bg-[#1C4C3B] relative flex items-center justify-center overflow-hidden">
+            <img src="${publicUrl}" alt="Officer Card" class="w-full h-auto object-contain" loading="lazy" />
             <span class="absolute top-3 left-3 bg-[#062E23]/90 text-[#D2B866] text-xs font-bold px-2.5 py-1 rounded border border-[#D2B866]/30">
               Order #${o.display_order}
             </span>
@@ -72,7 +77,7 @@ async function initAdminOfficers() {
     container.querySelectorAll('[data-delete-id]').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = btn.getAttribute('data-delete-id');
-        handleDeleteOfficer(id);
+        handleDeleteOfficer(id, btn);
       });
     });
   }
@@ -87,25 +92,31 @@ async function initAdminOfficers() {
     openModal('officerModal');
   }
 
-  async function handleDeleteOfficer(id) {
+  async function handleDeleteOfficer(id, btn) {
     const officer = currentOfficers.find(o => o.officer_id === id);
     if (!officer) return;
 
     if (!confirm('Are you sure you want to delete this officer card?')) return;
 
+    const originalText = btn ? btn.innerText : 'Delete';
+    if (btn) {
+      btn.disabled = true;
+      btn.innerText = 'Deleting...';
+    }
+
     try {
-      // 1. Delete file from Storage first
       if (officer.image_path) {
         await deleteImage('officers', officer.image_path);
       }
-      // 2. Delete database record only after Storage deletion succeeds
       await deleteOfficer(id);
-      // 3. Refresh UI only after DB deletion succeeds
       await loadOfficers();
-
     } catch (err) {
       console.error('[Admin Officers] Delete error:', err);
       alert('Failed to delete officer: ' + (err.message || err));
+      if (btn) {
+        btn.disabled = false;
+        btn.innerText = originalText;
+      }
     }
   }
 
@@ -125,22 +136,15 @@ async function initAdminOfficers() {
         return;
       }
 
-      console.log('[Officer] Selected file:', file);
-
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerText = 'UPLOADING...';
-      }
+      setButtonLoading(submitBtn, 'Uploading...');
 
       let newlyUploadedPath = null;
 
       try {
         let newImagePath = oldPath;
 
-        // 1. Upload compressed WebP image to Storage
         if (file) {
           const uploadResult = await uploadImage('officers', file);
-          console.log('[Officer] Upload result:', uploadResult);
 
           if (!uploadResult?.path) {
             throw new Error('No storage path returned from Storage upload.');
@@ -150,13 +154,9 @@ async function initAdminOfficers() {
           newImagePath = uploadResult.path;
         }
 
-        console.log('[Officer] Saving image_path:', newImagePath);
-
-        // 2. Insert/Update Database record with storage path
         if (id) {
           await updateOfficer(id, { image_path: newImagePath, display_order: displayOrder });
-          
-          // 3. Delete old storage image ONLY after DB update succeeds
+
           if (file && oldPath && oldPath !== newImagePath) {
             try {
               await deleteImage('officers', oldPath);
@@ -168,7 +168,6 @@ async function initAdminOfficers() {
           await addOfficer({ image_path: newImagePath, display_order: displayOrder });
         }
 
-        // Show success message ONLY after upload + DB write succeed
         if (successMsg) {
           successMsg.innerText = 'Officer saved successfully!';
           successMsg.classList.remove('hidden');
@@ -179,10 +178,7 @@ async function initAdminOfficers() {
           if (officerIdInput) officerIdInput.value = '';
           if (oldPathInput) oldPathInput.value = '';
           if (fileInput) fileInput.required = true;
-          if (submitBtn) {
-            submitBtn.innerText = 'Upload Officer';
-            submitBtn.disabled = false;
-          }
+          resetButton(submitBtn, 'Upload Officer');
           closeModal('officerModal');
           if (successMsg) successMsg.classList.add('hidden');
           loadOfficers();
@@ -191,10 +187,8 @@ async function initAdminOfficers() {
       } catch (err) {
         console.error('[Admin Officers] Upload/Save error:', err);
 
-        // Cleanup orphaned uploaded image if DB write failed
         if (newlyUploadedPath) {
           try {
-            console.warn('[Admin Officers] Cleaning up orphaned uploaded image:', newlyUploadedPath);
             await deleteImage('officers', newlyUploadedPath);
           } catch (cleanupErr) {
             console.error('[Admin Officers] Cleanup error:', cleanupErr);
@@ -205,10 +199,7 @@ async function initAdminOfficers() {
           errorMsg.innerText = 'Error: ' + (err.message || err);
           errorMsg.classList.remove('hidden');
         }
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerText = id ? 'Update Officer' : 'Upload Officer';
-        }
+        resetButton(submitBtn, id ? 'Update Officer' : 'Upload Officer');
       }
     });
   }

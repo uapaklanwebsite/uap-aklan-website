@@ -1,12 +1,12 @@
 import { getHistory } from './history.js';
+import { loadingHtml } from './ui-utils.js';
 
-/**
- * Public Chapter History Section Script
- */
 document.addEventListener('DOMContentLoaded', async () => {
   const container = document.getElementById('historyContent');
   const titleEl = document.getElementById('historyTitle');
   if (!container) return;
+
+  container.innerHTML = loadingHtml('Loading chapter history...');
 
   try {
     const historyList = await getHistory();
@@ -18,10 +18,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (latest.content) {
         const paragraphs = latest.content.split('\n\n').filter(p => p.trim());
         container.innerHTML = paragraphs.map(p => `<p class="mb-4">${escapeHtml(p.trim())}</p>`).join('');
+      } else {
+        container.innerHTML = `<p class="text-gray-400">No chapter history content available.</p>`;
       }
+    } else {
+      container.innerHTML = `<p class="text-gray-400">No chapter history available.</p>`;
     }
   } catch (err) {
     console.error('[History Page] Error loading history:', err);
+    container.innerHTML = `<p class="text-red-400">Error loading chapter history.</p>`;
   }
 });
 

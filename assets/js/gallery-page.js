@@ -1,12 +1,12 @@
 import { getGallery } from './gallery.js';
 import { getPublicUrl } from './storage.js';
+import { loadingHtml } from './ui-utils.js';
 
-/**
- * Public Gallery Section Script
- */
 document.addEventListener('DOMContentLoaded', async () => {
   const container = document.getElementById('galleryGrid');
   if (!container) return;
+
+  container.innerHTML = loadingHtml('Loading gallery...');
 
   try {
     const items = await getGallery();
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!items || items.length === 0) {
       container.innerHTML = `
         <div class="py-12 text-center text-gray-400">
-          No gallery images available yet.
+          No gallery images available.
         </div>
       `;
       return;

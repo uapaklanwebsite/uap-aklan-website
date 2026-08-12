@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Activities Management - UAP Aklan Chapter Admin." />
-  <title>Activities Management | Admin UAP Aklan</title>
+  <meta name="description" content="Members Directory Management - UAP Aklan Chapter Admin." />
+  <title>Members Directory | Admin UAP Aklan</title>
   <link rel="icon" type="image/png" href="/assets/img/logo.png" />
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
+
 <body class="min-h-full bg-[#030C09] text-gray-100 antialiased flex flex-col lg:flex-row">
 
   <!-- Mobile Sidebar Overlay Backdrop -->
@@ -18,7 +19,7 @@
     
     <div>
       <div class="h-16 flex items-center justify-between px-6 border-b border-[#D2B866]/20 bg-[#031C15]">
-        <a href="/admin/dashboard.html" class="flex items-center gap-3">
+        <a href="/uap-aklan-admin/dashboard.html" class="flex items-center gap-3">
           <img src="/assets/img/logo.png" alt="Logo" class="h-8 w-8 object-contain" />
           <span class="font-bold text-sm tracking-wider text-white uppercase">UAP Admin</span>
         </a>
@@ -30,42 +31,42 @@
       </div>
 
       <nav class="p-4 space-y-1">
-        <a href="/admin/dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+        <a href="/uap-aklan-admin/dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
           <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
           </svg>
           <span>Dashboard</span>
         </a>
 
-        <a href="/admin/members.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
-          <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <a href="/uap-aklan-admin/members.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold bg-[#0A3428] text-[#D2B866] border border-[#D2B866]/30 shadow-sm">
+          <svg class="h-5 w-5 text-[#D2B866]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
           <span>Members</span>
         </a>
 
-        <a href="/admin/officers.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+        <a href="/uap-aklan-admin/officers.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
           <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
           </svg>
           <span>Officers</span>
         </a>
 
-        <a href="/admin/gallery.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+        <a href="/uap-aklan-admin/gallery.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
           <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
           <span>Gallery</span>
         </a>
 
-        <a href="/admin/activities.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold bg-[#0A3428] text-[#D2B866] border border-[#D2B866]/30 shadow-sm">
-          <svg class="h-5 w-5 text-[#D2B866]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <a href="/uap-aklan-admin/activities.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
           <span>Activities</span>
         </a>
 
-        <a href="/admin/history.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+        <a href="/uap-aklan-admin/history.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
           <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -75,7 +76,7 @@
     </div>
 
     <div class="p-4 border-t border-[#D2B866]/20 bg-[#031C15]">
-      <a href="/admin/login.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-red-400 hover:bg-red-950/40 hover:text-red-300 transition">
+      <a href="/uap-aklan-admin/login.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-red-400 hover:bg-red-950/40 hover:text-red-300 transition">
         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
         </svg>
@@ -99,8 +100,8 @@
       </div>
 
       <div class="flex items-center gap-4">
-        <a href="/activities.html" target="_blank" class="text-xs text-gray-300 hover:text-[#D2B866] transition flex items-center gap-1">
-          <span>View Public Activities</span>
+        <a href="/directory.html" target="_blank" class="text-xs text-gray-300 hover:text-[#D2B866] transition flex items-center gap-1">
+          <span>View Public Directory</span>
           <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
@@ -114,49 +115,60 @@
       <!-- Page Header & Action Button -->
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 class="text-2xl sm:text-3xl font-bold uppercase tracking-wider text-white">Calendar of Activities</h1>
-          <p class="text-sm text-gray-400 mt-1">Manage the calendar of activities for chapter events.</p>
+          <h1 class="text-2xl sm:text-3xl font-bold uppercase tracking-wider text-white">Members Directory</h1>
+          <p class="text-sm text-gray-400 mt-1">Manage UAP Aklan Chapter members.</p>
         </div>
 
         <button
           type="button"
-          data-modal-open="activityModal"
+          data-modal-open="memberModal"
           class="inline-flex items-center justify-center gap-2 rounded-lg border border-[#D2B866] bg-[#0E3A2D] px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-[#D2B866] hover:bg-[#124132] hover:text-white transition focus:outline-none focus:ring-2 focus:ring-[#D2B866]"
         >
           <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
           </svg>
-          <span>+ Add Activity</span>
+          <span>+ Add Member</span>
         </button>
       </div>
 
-      <!-- Activities Table Container -->
+      <!-- Search Input -->
+      <div class="max-w-md relative">
+        <input
+          type="text"
+          placeholder="Search members..."
+          class="w-full rounded-lg border border-[#D2B866]/20 bg-[#062E23] pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-400 focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866] transition"
+        />
+        <svg class="absolute left-3.5 top-3 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+
+      <!-- Members Table Container -->
       <div class="rounded-xl border border-[#D2B866]/20 bg-[#0C2D22] overflow-hidden shadow-xl">
         <div class="overflow-x-auto">
           <table class="w-full border-collapse text-left">
             <thead>
               <tr class="border-b border-[#D2B866]/20 bg-[#0A3428] text-xs font-semibold uppercase tracking-widest text-[#D2B866]">
-                <th class="py-4 px-6">Year</th>
-                <th class="py-4 px-6">Month</th>
-                <th class="py-4 px-6">Calendar Image</th>
+                <th class="py-4 px-6">Name</th>
+                <th class="py-4 px-6">Address</th>
+                <th class="py-4 px-6">Email</th>
                 <th class="py-4 px-6 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody id="adminActivitiesList" class="divide-y divide-gray-800 text-sm">
+            <tbody id="adminMembersList" class="divide-y divide-gray-800 text-sm">
 
-              <!-- Entry 1 -->
+              <!-- Record 1 -->
               <tr class="hover:bg-white/5 transition">
-                <td class="py-4 px-6 font-bold text-white">2026</td>
-                <td class="py-4 px-6 text-gray-200 font-medium">August</td>
+                <td class="py-4 px-6 font-semibold text-white">Arch. Maria Santos</td>
+                <td class="py-4 px-6 text-gray-300">Kalibo, Aklan</td>
                 <td class="py-4 px-6">
-                  <div class="flex items-center gap-3">
-                    <img src="/assets/img/logo.png" alt="Activity Calendar" class="h-10 w-10 object-contain rounded bg-[#062E23] p-1 border border-[#D2B866]/20" />
-                    <span class="text-xs text-gray-400">august-2026.png</span>
-                  </div>
+                  <a href="https://facebook.com" target="_blank" class="text-xs text-[#D2B866] hover:underline flex items-center gap-1">
+                    <span>Facebook Profile</span>
+                  </a>
                 </td>
                 <td class="py-4 px-6 text-right">
                   <div class="flex items-center justify-end gap-2">
-                    <button data-modal-open="activityModal" class="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded border border-[#D2B866]/30 text-[#D2B866] hover:bg-[#0E3A2D] transition">EDIT</button>
+                    <button data-modal-open="memberModal" class="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded border border-[#D2B866]/30 text-[#D2B866] hover:bg-[#0E3A2D] transition">EDIT</button>
                     <button class="px-3 py-1 text-xs font-bold uppercase tracking-wider rounded border border-red-500/30 text-red-400 hover:bg-red-950/40 transition">DELETE</button>
                   </div>
                 </td>
@@ -171,12 +183,13 @@
 
   </div>
 
-  <!-- Add / Edit Activity Modal -->
-  <div id="activityModal" class="admin-modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
+  <!-- Add / Edit Member Modal -->
+  <div id="memberModal" class="admin-modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden">
     <div class="relative w-full max-w-lg rounded-xl border border-[#D2B866]/30 bg-[#0C2D22] p-6 shadow-2xl space-y-6">
       
+      <!-- Modal Header -->
       <div class="flex items-center justify-between border-b border-[#D2B866]/20 pb-4">
-        <h2 class="text-lg font-bold uppercase tracking-wider text-white">Activity Calendar Details</h2>
+        <h2 id="memberModalTitle" class="text-lg font-bold uppercase tracking-wider text-white">Member Details</h2>
         <button type="button" data-modal-close class="text-gray-400 hover:text-white p-1">
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -184,76 +197,53 @@
         </button>
       </div>
 
-      <div id="activityError" class="hidden rounded-md border border-red-500/40 bg-red-950/60 p-3 text-xs text-red-300">
-        Error saving activity. Please verify input fields.
+      <!-- Messages -->
+      <div id="memberError" class="hidden rounded-md border border-red-500/40 bg-red-950/60 p-3 text-xs text-red-300">
+        Error saving member details. Please check the inputs.
       </div>
-      <div id="activitySuccess" class="hidden rounded-md border border-emerald-500/40 bg-emerald-950/60 p-3 text-xs text-emerald-300">
-        Activity saved successfully!
+      <div id="memberSuccess" class="hidden rounded-md border border-emerald-500/40 bg-emerald-950/60 p-3 text-xs text-emerald-300">
+        Member details saved successfully!
       </div>
 
-      <form id="activityForm" class="space-y-4">
-        <input type="hidden" id="activityId" name="activityId" />
-        <input type="hidden" id="activityOldPath" name="activityOldPath" />
+      <!-- Form -->
+      <form id="memberForm" class="space-y-4">
+        <input type="hidden" id="memberId" name="memberId" />
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Year Field -->
-          <div>
-            <label for="activityYear" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Year <span class="text-[#D2B866]">*</span></label>
-            <input
-              type="number"
-              id="activityYear"
-              name="activityYear"
-              required
-              min="2000"
-              max="2099"
-              value="2026"
-              class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866] transition"
-            />
-          </div>
-
-          <!-- Month Field Dropdown -->
-          <div>
-            <label for="activityMonth" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Month <span class="text-[#D2B866]">*</span></label>
-            <select
-              id="activityMonth"
-              name="activityMonth"
-              required
-              class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] px-4 py-2.5 text-sm text-white focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866] transition"
-            >
-              <option value="January">January</option>
-              <option value="February">February</option>
-              <option value="March">March</option>
-              <option value="April">April</option>
-              <option value="May">May</option>
-              <option value="June">June</option>
-              <option value="July">July</option>
-              <option value="August" selected>August</option>
-              <option value="September">September</option>
-              <option value="October">October</option>
-              <option value="November">November</option>
-              <option value="December">December</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Calendar Image File Input -->
         <div>
-          <label for="activityImage" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Calendar Image <span class="text-[#D2B866]">*</span></label>
+          <label for="fullName" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Full Name <span class="text-[#D2B866]">*</span></label>
           <input
-            type="file"
-            id="activityImage"
-            name="activityImage"
-            accept="image/*"
+            type="text"
+            id="fullName"
+            name="fullName"
             required
-            class="block w-full text-xs text-gray-300 file:mr-4 file:py-2.5 file:px-4 file:rounded-md file:border file:border-[#D2B866] file:text-xs file:font-bold file:uppercase file:bg-[#0E3A2D] file:text-[#D2B866] hover:file:bg-[#124132] cursor-pointer"
+            placeholder="e.g. Arch. Juan Dela Cruz"
+            class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866] transition"
           />
         </div>
 
-        <!-- Image Preview Area -->
-        <div id="activityPreview" class="min-h-[6rem] border border-dashed border-[#D2B866]/20 rounded-lg p-3 bg-[#062E23]/50 flex items-center justify-center">
-          <span class="text-xs text-gray-500">Selected calendar image preview will appear here</span>
+        <div>
+          <label for="address" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Address / Location <span class="text-gray-500 font-normal normal-case">(Optional)</span></label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            placeholder="e.g. Kalibo, Aklan"
+            class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866] transition"
+          />
         </div>
 
+        <div>
+          <label for="email" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Email <span class="text-gray-500 font-normal normal-case">(Optional)</span></label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="user@example.com"
+            class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866] transition"
+          />
+        </div>
+
+        <!-- Buttons -->
         <div class="flex items-center justify-end gap-3 border-t border-[#D2B866]/20 pt-4">
           <button
             type="button"
@@ -264,10 +254,10 @@
           </button>
           <button
             type="submit"
-            id="activitySubmit"
+            id="memberSubmit"
             class="px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-md border border-[#D2B866] bg-[#0E3A2D] text-[#D2B866] hover:bg-[#124132] hover:text-white transition"
           >
-            Save Activity
+            Save Member
           </button>
         </div>
 
@@ -277,6 +267,6 @@
   </div>
 
   <script type="module" src="/assets/js/admin.js"></script>
-  <script type="module" src="/assets/js/admin-activities.js"></script>
+  <script type="module" src="/assets/js/admin-members.js"></script>
 </body>
 </html>
