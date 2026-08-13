@@ -73,10 +73,7 @@ async function initAdminGallery() {
     if (!confirm('Are you sure you want to delete this gallery image?')) return;
 
     const originalText = btn ? btn.innerText : 'Delete';
-    if (btn) {
-      btn.disabled = true;
-      btn.innerText = 'Deleting...';
-    }
+    if (btn) setButtonLoading(btn, 'Deleting...');
 
     try {
       if (item.image_path) {
@@ -86,11 +83,13 @@ async function initAdminGallery() {
       await loadGallery();
     } catch (err) {
       console.error('[Admin Gallery] Delete error:', err);
-      alert('Failed to delete gallery image: ' + (err.message || err));
-      if (btn) {
-        btn.disabled = false;
-        btn.innerText = originalText;
+      if (typeof errorMsg !== 'undefined' && errorMsg) {
+        errorMsg.innerText = 'Unable to delete this item. Please try again.';
+        errorMsg.classList.remove('hidden');
+      } else {
+        console.error('[UI] No inline error area available to show delete failure.');
       }
+      if (btn) resetButton(btn, originalText);
     }
   }
 
@@ -102,7 +101,10 @@ async function initAdminGallery() {
 
       const file = fileInput.files?.[0];
       if (!file) {
-        alert('Please select an image file to upload.');
+        if (errorMsg) {
+          errorMsg.innerText = 'Please select an image file to upload.';
+          errorMsg.classList.remove('hidden');
+        }
         return;
       }
 
@@ -147,7 +149,7 @@ async function initAdminGallery() {
         }
 
         if (errorMsg) {
-          errorMsg.innerText = 'Error uploading image: ' + (err.message || err);
+          errorMsg.innerText = 'The image could not be uploaded. Please try again.';
           errorMsg.classList.remove('hidden');
         }
         resetButton(submitBtn, 'Upload Image');

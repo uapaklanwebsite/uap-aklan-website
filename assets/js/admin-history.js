@@ -52,7 +52,10 @@ async function initAdminHistory() {
       };
 
       if (!data.title || !data.content) {
-        alert('Title and content are required.');
+        if (errorMsg) {
+          errorMsg.innerText = 'Title and content are required.';
+          errorMsg.classList.remove('hidden');
+        }
         return;
       }
 
@@ -76,7 +79,7 @@ async function initAdminHistory() {
       } catch (err) {
         console.error('[Admin History] Save error:', err);
         if (errorMsg) {
-          errorMsg.innerText = 'Error saving history: ' + (err.message || err);
+          errorMsg.innerText = 'Unable to save the changes. Please try again.';
           errorMsg.classList.remove('hidden');
         }
         resetButton(submitBtn, 'Save Changes');

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="United Architects of the Philippines - Aklan Chapter official website." />
   <title>Home | UAP Aklan Chapter</title>
-  <link rel="icon" type="image/png" href="/assets/img/logo.png" />
+  <link rel="icon" type="image/png" href="/assets/img/uap-aklan-logo.jpg" />
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body class="flex flex-col min-h-full bg-[#0D3628] text-gray-900 antialiased">
@@ -72,32 +72,18 @@
       </div>
       <!-- Welcome -->
       <div class="mt-12 max-w-4xl">
-          <h3 class="mb-6 text-xl font-bold text-[#D2B866]">Welcome to the UAP–Aklan Chapter!</h3>
-          <p class="leading-8 text-gray-300 text-justify">
-              <span class="font-bold">United Architects of the Philippines (UAP) – Aklan Chapter</span>
-              , or <span class="font-bold">UAP Chapter No.109</span>, is an Integrated and Accredited
-              Professional Organization of Architects in the Province
-              of Aklan, chartered in 2006, UAP Aklan proudly celebrates <span class="font-bold">20 years of dedicated service and 
-              professional excellence</span> in 2026. For two decades, the chapter has championed the 
-              architectural profession, fostered collaboration among industry partners, and contributed 
-              to the sustainable growth and development of the Province of Aklan.
-          </p>
+          <h3 id="welcomeTitle" class="mb-6 text-xl font-bold text-[#D2B866]"></h3>
+          <div id="welcomeContent"></div>
       </div>
         <!-- Mission & Vision -->
       <div class="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
-          <h4 class="mb-5 text-sm font-bold uppercase tracking-widest text-[#D2B866]">Mission</h4>
-          <p class="leading-8 text-gray-300 text-justify">
-              To increase public awareness and uphold the role of Architects in our province by creating 
-              sustainable buildings, improving the quality of life at home, in the workplace and 
-              environment, by community service and by working hand in hand with allied professionals.
-          </p>
+          <h4 id="missionTitle" class="mb-5 text-sm font-bold uppercase tracking-widest text-[#D2B866]"></h4>
+          <div id="missionContent"></div>
         </div>
         <div>
-            <h4 class="mb-5 text-sm font-bold uppercase tracking-widest text-[#D2B866]">Vision</h4>
-            <p class="leading-8 text-gray-300 text-justify">
-                A highly uplifted Architecture practice in a vastly progressive province of Aklan.
-            </p>
+            <h4 id="visionTitle" class="mb-5 text-sm font-bold uppercase tracking-widest text-[#D2B866]"></h4>
+            <div id="visionContent"></div>
         </div>
       </div>
     </div>
@@ -119,7 +105,7 @@
 
       <!-- Heading -->
       <h2 class="mb-14 text-center text-4xl font-light uppercase tracking-wide text-white lg:text-left lg:text-5xl">
-        Elected Chapter Officers
+        Chapter Officers and Advisers
       </h2>
 
       <!-- Officer Grid -->
@@ -201,5 +187,6 @@
 
   <!-- Shared App JS Module -->
   <script type="module" src="/assets/js/app.js"></script>
+  <script type="module" src="/assets/js/site-content-page.js"></script>
 </body>
 </html>

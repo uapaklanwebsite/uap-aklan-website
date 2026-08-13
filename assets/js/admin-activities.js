@@ -99,11 +99,8 @@ async function initAdminActivities() {
 
     if (!confirm('Are you sure you want to delete this activity calendar?')) return;
 
-    const originalText = btn ? btn.innerText : 'DELETE';
-    if (btn) {
-      btn.disabled = true;
-      btn.innerText = 'Deleting...';
-    }
+      const originalText = btn ? btn.innerText : 'Delete';
+      if (btn) setButtonLoading(btn, 'Deleting...');
 
     try {
       if (activity.image_path) {
@@ -113,11 +110,13 @@ async function initAdminActivities() {
       await loadActivitiesList();
     } catch (err) {
       console.error('[Admin Activities] Delete error:', err);
-      alert('Failed to delete activity: ' + (err.message || err));
-      if (btn) {
-        btn.disabled = false;
-        btn.innerText = originalText;
+      if (typeof errorMsg !== 'undefined' && errorMsg) {
+        errorMsg.innerText = 'Unable to delete this item. Please try again.';
+        errorMsg.classList.remove('hidden');
+      } else {
+        console.error('[UI] No inline error area available to show delete failure.');
       }
+      if (btn) resetButton(btn, originalText);
     }
   }
 
@@ -134,7 +133,10 @@ async function initAdminActivities() {
       const file = fileInput.files?.[0];
 
       if (!id && !file) {
-        alert('Please select a calendar image file.');
+        if (errorMsg) {
+          errorMsg.innerText = 'Please select a calendar image file.';
+          errorMsg.classList.remove('hidden');
+        }
         return;
       }
 
@@ -198,7 +200,7 @@ async function initAdminActivities() {
         }
 
         if (errorMsg) {
-          errorMsg.innerText = 'Error saving activity: ' + (err.message || err);
+            errorMsg.innerText = 'Unable to save the changes. Please try again.';
           errorMsg.classList.remove('hidden');
         }
         resetButton(submitBtn, id ? 'Update Activity' : 'Save Activity');

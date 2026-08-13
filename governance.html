@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Chapter Dues and Payment Information for UAP Aklan Chapter." />
+  <meta name="description" content="Governance and Accreditations information for UAP Aklan Chapter." />
   <title>Governance | UAP Aklan Chapter</title>
-  <link rel="icon" type="image/png" href="/assets/img/logo.png" />
+  <link rel="icon" type="image/png" href="/assets/img/uap-aklan-logo.jpg" />
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body class="flex flex-col min-h-full bg-[#030C09] text-gray-900 antialiased">
@@ -13,7 +13,7 @@
   <!-- Header / Navigation Placeholder -->
   <load src="./components/navbar.html" />
 
-  <section id="governance" class="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-[#030C09] via-[#0D3628] to-[#030C09] py-20 lg:py-14">
+  <section id="governance" class="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-[#030C09] via-[#0D3628] to-[#030C09] py-20 lg:py-14 relative">
 
     <!-- Background Pattern -->
     <div class="absolute inset-0 pointer-events-none opacity-10">
@@ -25,7 +25,7 @@
         <div class="mb-12 flex items-center gap-4">
           <span class="text-xs font-semibold tracking-[0.25em] text-[#D2B866]">07</span>
           <div class="h-px w-14 bg-[#D2B866]"></div>
-          <p class="text-4xl font-bold uppercase tracking-[0.01em] text-[#D2B866]">Governance</p>
+          <h1 class="text-4xl font-bold uppercase tracking-[0.01em] text-[#D2B866]">Governance</h1>
       </div>
         <!-- Buttons -->
         <div class="mx-auto flex max-w-xl flex-col gap-6 py-10">
@@ -38,61 +38,52 @@
         </div>
     </div>
   </section>
-  <section id="accreditations" class="bg-gradient-to-b from-[#030C09] via-[#0D3628] to-[#030C09] py-20 lg:py-28 border-y border-[#D2B866]">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+
+  <!-- Resolutions Section -->
+  <section id="resolutions" class="bg-gradient-to-b from-[#030C09] via-[#0D3628] to-[#030C09] py-20 lg:py-28 border-y border-[#D2B866]">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8 space-y-8">
 
         <!-- Section Label -->
-        <div class="mb-12 flex items-center gap-4">
+        <div class="flex items-center gap-4">
             <span class="text-xs font-semibold tracking-[0.25em] text-[#D2B866]">
                 7.1
             </span>
             <div class="h-px w-14 bg-[#D2B866]"></div>
-            <p class="text-xs font-semibold uppercase tracking-[0.25em] text-[#D2B866]">
-                Accreditations
-            </p>
+            <h2 class="text-2xl sm:text-3xl font-semibold uppercase tracking-[0.15em] text-[#D2B866]">
+                Resolutions
+            </h2>
         </div>
-        <!-- Chapter Dues Image -->
-        <div class="flex justify-center">
-            <button class="group overflow-hidden rounded-lg border border-[#D4AF37]/20 bg-[#0C2D22] p-3 shadow-lg hover:border-[#D4AF37]">
-                <img
-                    src="../assets/img/AWARDS.png"
-                    alt="UAP Aklan Awards"
-                    class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg object-contain"
-                />
-            </button>
-        </div>
+
+        <div id="resolutionsContent"></div>
+
     </div>
   </section>
-  <!-- <section id="help" class="bg-gradient-to-b from-[#030C09] via-[#0D3628] to-[#030C09] py-20 lg:py-28 border-y border-[#D2B866]">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
 
-        Section Label
-        <div class="mb-12 flex items-center gap-4">
+  <!-- Accreditations Section -->
+  <section id="accreditations" class="bg-gradient-to-b from-[#030C09] via-[#0D3628] to-[#030C09] py-20 lg:py-28 border-y border-[#D2B866]">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8 space-y-8">
+
+        <!-- Section Label -->
+        <div class="flex items-center gap-4">
             <span class="text-xs font-semibold tracking-[0.25em] text-[#D2B866]">
-                5.3
+                7.2
             </span>
             <div class="h-px w-14 bg-[#D2B866]"></div>
-            <p class="text-xs font-semibold uppercase tracking-[0.25em] text-[#D2B866]">
-                Need Help?
-            </p>
+            <h2 class="text-2xl sm:text-3xl font-semibold uppercase tracking-[0.15em] text-[#D2B866]">
+                Accreditations
+            </h2>
         </div>
-        Award Image
-        <div class="flex justify-center">
-            <button class="group overflow-hidden rounded-lg border border-[#D4AF37]/20 bg-[#0C2D22] p-3 shadow-lg hover:border-[#D4AF37]">
-                <img
-                    src="../assets/img/AWARDS.png"
-                    alt="UAP Aklan Awards"
-                    class="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg object-contain"
-                />
-            </button>
-        </div>
+
+        <div id="accreditationsGallery"></div>
+
     </div>
-  </section> -->
+  </section>
 
   <!-- Footer Placeholder -->
   <load src="./components/footer.html" />
 
   <!-- Shared App JS Module -->
   <script type="module" src="/assets/js/app.js"></script>
+  <script type="module" src="/assets/js/governance-page.js"></script>
 </body>
 </html>

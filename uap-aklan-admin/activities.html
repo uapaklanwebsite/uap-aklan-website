@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Activities Management - UAP Aklan Chapter Admin." />
   <title>Activities Management | Admin UAP Aklan</title>
-  <link rel="icon" type="image/png" href="/assets/img/logo.png" />
+  <link rel="icon" type="image/png" href="/assets/img/uap-aklan-logo.jpg" />
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
 <body class="min-h-full bg-[#030C09] text-gray-100 antialiased flex flex-col lg:flex-row">
@@ -14,71 +14,70 @@
   <div id="admin-sidebar-overlay" class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm hidden lg:hidden"></div>
 
   <!-- Sidebar Navigation -->
-  <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-50 w-64 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out bg-[#062E23] border-r border-[#D2B866]/20 flex flex-col justify-between">
+  <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-50 w-64 max-h-screen transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out bg-[#062E23] border-r border-[#D2B866]/20 flex flex-col">
     
-    <div>
-      <div class="h-16 flex items-center justify-between px-6 border-b border-[#D2B866]/20 bg-[#031C15]">
-        <a href="/uap-aklan-admin/dashboard.html" class="flex items-center gap-3">
-          <img src="/assets/img/logo.png" alt="Logo" class="h-8 w-8 object-contain" />
-          <span class="font-bold text-sm tracking-wider text-white uppercase">UAP Admin</span>
-        </a>
-        <button id="admin-sidebar-close" class="lg:hidden text-gray-400 hover:text-white p-1">
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
+    <div class="h-16 flex items-center justify-between px-6 border-b border-[#D2B866]/20 bg-[#031C15]">
+      <a href="/uap-aklan-admin/dashboard.html" class="flex items-center gap-3">
+        <img src="/assets/img/logo.png" alt="Logo" class="h-8 w-8 object-contain" />
+        <span class="font-bold text-sm tracking-wider text-white uppercase">UAP Admin</span>
+      </a>
+      <button id="admin-sidebar-close" class="lg:hidden text-gray-400 hover:text-white p-1">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
 
+           <!-- Navigation Links -->
+    <div class="flex-1 overflow-y-auto">
       <nav class="p-4 space-y-1">
         <a href="/uap-aklan-admin/dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
-          <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-          </svg>
           <span>Dashboard</span>
         </a>
 
         <a href="/uap-aklan-admin/members.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
-          <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
           <span>Members</span>
         </a>
 
         <a href="/uap-aklan-admin/officers.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
-          <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-          </svg>
           <span>Officers</span>
         </a>
 
         <a href="/uap-aklan-admin/gallery.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
-          <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
           <span>Gallery</span>
         </a>
 
         <a href="/uap-aklan-admin/activities.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold bg-[#0A3428] text-[#D2B866] border border-[#D2B866]/30 shadow-sm">
-          <svg class="h-5 w-5 text-[#D2B866]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
           <span>Activities</span>
         </a>
 
+        <a href="/uap-aklan-admin/site-content.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Home &amp; About</span>
+        </a>
+
+        <a href="/uap-aklan-admin/awards.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Awards</span>
+        </a>
+        <a href="/uap-aklan-admin/membership.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Membership</span>
+        </a>
+        <a href="/uap-aklan-admin/dues.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Pay Your Dues</span>
+        </a>
+        <a href="/uap-aklan-admin/governance.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Governance</span>
+        </a>
+        <a href="/uap-aklan-admin/accreditations.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Accreditations</span>
+        </a>
         <a href="/uap-aklan-admin/history.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
-          <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
           <span>Chapter History</span>
         </a>
       </nav>
     </div>
 
-    <div class="p-4 border-t border-[#D2B866]/20 bg-[#031C15]">
+      <div class="p-4 border-t border-[#D2B866]/20 bg-[#031C15]">
       <a href="/uap-aklan-admin/login.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-red-400 hover:bg-red-950/40 hover:text-red-300 transition">
-        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-        </svg>
         <span>Logout</span>
       </a>
     </div>

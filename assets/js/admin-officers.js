@@ -99,10 +99,7 @@ async function initAdminOfficers() {
     if (!confirm('Are you sure you want to delete this officer card?')) return;
 
     const originalText = btn ? btn.innerText : 'Delete';
-    if (btn) {
-      btn.disabled = true;
-      btn.innerText = 'Deleting...';
-    }
+    if (btn) setButtonLoading(btn, 'Deleting...');
 
     try {
       if (officer.image_path) {
@@ -112,11 +109,13 @@ async function initAdminOfficers() {
       await loadOfficers();
     } catch (err) {
       console.error('[Admin Officers] Delete error:', err);
-      alert('Failed to delete officer: ' + (err.message || err));
-      if (btn) {
-        btn.disabled = false;
-        btn.innerText = originalText;
+      if (typeof errorMsg !== 'undefined' && errorMsg) {
+        errorMsg.innerText = 'Unable to delete this item. Please try again.';
+        errorMsg.classList.remove('hidden');
+      } else {
+        console.error('[UI] No inline error area available to show delete failure.');
       }
+      if (btn) resetButton(btn, originalText);
     }
   }
 
@@ -132,7 +131,10 @@ async function initAdminOfficers() {
       const displayOrder = parseInt(orderInput.value, 10) || 1;
 
       if (!id && !file) {
-        alert('Please select an image file to upload.');
+        if (errorMsg) {
+          errorMsg.innerText = 'Please select an image file to upload.';
+          errorMsg.classList.remove('hidden');
+        }
         return;
       }
 
@@ -196,7 +198,7 @@ async function initAdminOfficers() {
         }
 
         if (errorMsg) {
-          errorMsg.innerText = 'Error: ' + (err.message || err);
+            errorMsg.innerText = 'Unable to save the changes. Please try again.';
           errorMsg.classList.remove('hidden');
         }
         resetButton(submitBtn, id ? 'Update Officer' : 'Upload Officer');

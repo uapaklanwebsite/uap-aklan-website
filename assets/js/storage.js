@@ -8,7 +8,7 @@ import { compressImage } from './image.js';
 /**
  * Uploads an image file to a Supabase Storage bucket after compressing it to WebP format.
  * Generates a unique UUID filename (e.g., '{uuid}.webp').
- * @param {string} bucket - Target bucket name ('officers', 'gallery', 'activities')
+ * @param {string} bucket - Target bucket name ('officers', 'gallery', 'activities', 'awards')
  * @param {File|Blob} file - The original image file selected by user
  * @returns {Promise<{ path: string, publicUrl: string }>} Object containing image_path to store in DB and the public URL
  */
@@ -56,7 +56,7 @@ export async function uploadImage(bucket, file) {
 /**
  * Deletes an image file from a Supabase Storage bucket.
  * Returns the Supabase Storage response data.
- * @param {string} bucket - Target bucket name ('officers', 'gallery', 'activities')
+ * @param {string} bucket - Target bucket name ('officers', 'gallery', 'activities', 'awards')
  * @param {string} path - Relative image path stored in database
  * @returns {Promise<Array>} Returned removal data array from Supabase Storage
  */
@@ -84,7 +84,7 @@ export async function deleteImage(bucket, path) {
 
 /**
  * Returns the public URL for an image stored in Supabase Storage.
- * @param {string} bucket - Target bucket name ('officers', 'gallery', 'activities')
+ * @param {string} bucket - Target bucket name ('officers', 'gallery', 'activities', 'awards')
  * @param {string} path - Relative image path stored in database (e.g. '2.png' or 'abc123.webp')
  * @returns {string} Public URL of the image
  */

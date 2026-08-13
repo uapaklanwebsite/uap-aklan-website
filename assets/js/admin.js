@@ -28,6 +28,8 @@ async function initDashboardStats() {
   const statOfficers = document.getElementById('statOfficers');
   const statGallery = document.getElementById('statGallery');
   const statActivities = document.getElementById('statActivities');
+  const statAwards = document.getElementById('statAwards');
+  const statAccreditations = document.getElementById('statAccreditations');
 
   if (!statMembers && !statOfficers && !statGallery && !statActivities) return;
 
@@ -36,6 +38,8 @@ async function initDashboardStats() {
     { table: 'officers', el: statOfficers },
     { table: 'gallery', el: statGallery },
     { table: 'activities', el: statActivities },
+    { table: 'awards', el: statAwards },
+    { table: 'accreditations', el: statAccreditations },
   ];
 
   tables.forEach(({ el }) => {
@@ -51,14 +55,15 @@ async function initDashboardStats() {
 
       if (error) {
         console.error(`[Dashboard] Error counting ${table}:`, error);
-        el.textContent = '0';
+        // Show a friendly fallback when counting fails
+        el.textContent = '—';
         return;
       }
 
-      el.textContent = count ?? 0;
+      el.textContent = typeof count === 'number' ? count : (count ?? '0');
     } catch (err) {
       console.error(`[Dashboard] Exception counting ${table}:`, err);
-      el.textContent = '0';
+      el.textContent = '—';
     }
   }));
 }
@@ -223,14 +228,20 @@ function initModals() {
   const closeButtons = document.querySelectorAll('[data-modal-close]');
   closeButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const modal = btn.closest('.admin-modal');
+      // Prefer explicit target id on the attribute, fallback to closest modal container
+      const targetId = btn.getAttribute('data-modal-close');
+      if (targetId) {
+        closeModal(targetId);
+        return;
+      }
+      const modal = btn.closest('.admin-modal') || btn.closest('[id]');
       if (modal) closeModal(modal.id);
     });
   });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      const activeModal = document.querySelector('.admin-modal:not(.hidden)');
+      const activeModal = document.querySelector('[id]:not(.hidden)');
       if (activeModal) closeModal(activeModal.id);
     }
   });
@@ -252,9 +263,46 @@ export function openModal(modalId) {
 export function closeModal(modalId) {
   const modal = document.getElementById(modalId);
   if (!modal) return;
-
+  // Hide modal
   modal.classList.add('hidden');
   document.body.classList.remove('overflow-hidden');
+
+  // Reset form fields inside modal (if any)
+  const forms = modal.querySelectorAll('form');
+  forms.forEach((form) => {
+    try {
+      form.reset();
+    } catch (err) {
+      // ignore
+    }
+  });
+
+  // Clear file inputs and preview containers
+  const fileInputs = modal.querySelectorAll('input[type="file"]');
+  fileInputs.forEach((fi) => {
+    try { fi.value = ''; } catch (e) { /* ignore */ }
+  });
+
+  // Clear preview containers. Matches existing id suffix, common helper class, or data-preview attributes
+  const previews = modal.querySelectorAll('[id$="Preview"], .image-preview, [data-preview]');
+  previews.forEach((p) => {
+    try {
+      // If the preview is an <img> element, clear its src; otherwise clear innerHTML
+      if (p.tagName && p.tagName.toLowerCase() === 'img') {
+        p.src = '';
+      } else {
+        p.innerHTML = '';
+      }
+      // Remove background-image if present
+      try { p.style && (p.style.backgroundImage = 'none'); } catch (e) { /* ignore */ }
+    } catch (e) { /* ignore */ }
+  });
+
+  // Clear error/success UI
+  const errorAreas = modal.querySelectorAll('[id$="Error"]');
+  const successAreas = modal.querySelectorAll('[id$="Success"]');
+  errorAreas.forEach((ea) => ea.classList.add('hidden'));
+  successAreas.forEach((sa) => sa.classList.add('hidden'));
 }
 
 /**
@@ -265,6 +313,7 @@ function initImagePreviews() {
     { inputId: 'officerImage', previewId: 'officerPreview' },
     { inputId: 'galleryImage', previewId: 'galleryPreview' },
     { inputId: 'activityImage', previewId: 'activityPreview' },
+    { inputId: 'awardImage', previewId: 'awardPreview' },
   ];
 
   fileInputs.forEach(({ inputId, previewId }) => {

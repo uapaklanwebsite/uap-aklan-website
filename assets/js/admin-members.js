@@ -110,21 +110,20 @@ async function initAdminMembers() {
     if (!confirm('Are you sure you want to delete this member?')) return;
 
     const originalText = btn ? btn.innerText : 'DELETE';
-    if (btn) {
-      btn.disabled = true;
-      btn.innerText = 'DELETING...';
-    }
+    if (btn) setButtonLoading(btn, 'DELETING...');
 
     try {
       await deleteMember(id);
       await loadMembers();
     } catch (err) {
       console.error('[Admin Members] Error deleting member:', err);
-      alert('Failed to delete member: ' + (err.message || err));
-      if (btn) {
-        btn.disabled = false;
-        btn.innerText = originalText;
+      if (typeof errorMsg !== 'undefined' && errorMsg) {
+        errorMsg.innerText = 'Unable to delete this item. Please try again.';
+        errorMsg.classList.remove('hidden');
+      } else {
+        console.error('[UI] No inline error area available to show delete failure.');
       }
+      if (btn) resetButton(btn, originalText);
     }
   }
 
@@ -175,7 +174,7 @@ async function initAdminMembers() {
       } catch (err) {
         console.error('[Admin Members] Form submit error:', err);
         if (errorMsg) {
-          errorMsg.innerText = 'Error saving member: ' + (err.message || 'Check inputs.');
+          errorMsg.innerText = 'Unable to save the changes. Please check the required fields and try again.';
           errorMsg.classList.remove('hidden');
         }
         resetButton(submitBtn, id ? 'Update Member' : 'Save Member');

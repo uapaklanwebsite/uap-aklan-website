@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Governance Management - UAP Aklan Chapter Admin." />
+  <title>Governance | Admin UAP Aklan</title>
+  <link rel="icon" type="image/png" href="/assets/img/uap-aklan-logo.jpg" />
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body class="min-h-full bg-[#030C09] text-gray-100 antialiased flex flex-col lg:flex-row">
+
+  <div id="admin-sidebar-overlay" class="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm hidden lg:hidden"></div>
+
+  <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-50 w-64 max-h-screen transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out bg-[#062E23] border-r border-[#D2B866]/20 flex flex-col">
+    <div class="h-16 flex items-center justify-between px-6 border-b border-[#D2B866]/20 bg-[#031C15]">
+      <a href="/uap-aklan-admin/dashboard.html" class="flex items-center gap-3">
+        <img src="/assets/img/logo.png" alt="Logo" class="h-8 w-8 object-contain" />
+        <span class="font-bold text-sm tracking-wider text-white uppercase">UAP Admin</span>
+      </a>
+      <button id="admin-sidebar-close" class="lg:hidden text-gray-400 hover:text-white p-1">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+    </div>
+      
+        <!-- Navigation Links -->
+    <div class="flex-1 overflow-y-auto">
+      <nav class="p-4 space-y-1">
+        <a href="/uap-aklan-admin/dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Dashboard</span>
+        </a>
+
+        <a href="/uap-aklan-admin/members.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Members</span>
+        </a>
+
+        <a href="/uap-aklan-admin/officers.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Officers</span>
+        </a>
+
+        <a href="/uap-aklan-admin/gallery.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Gallery</span>
+        </a>
+
+        <a href="/uap-aklan-admin/activities.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Activities</span>
+        </a>
+
+
+        <a href="/uap-aklan-admin/site-content.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Home &amp; About</span>
+        </a>
+
+        <a href="/uap-aklan-admin/awards.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Awards</span>
+        </a>
+        <a href="/uap-aklan-admin/membership.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Membership</span>
+        </a>
+        <a href="/uap-aklan-admin/dues.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Pay Your Dues</span>
+        </a>
+        <a href="/uap-aklan-admin/governance.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold bg-[#0A3428] text-[#D2B866] border border-[#D2B866]/30 shadow-sm">
+          <span>Governance</span>
+        </a>
+        <a href="/uap-aklan-admin/accreditations.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Accreditations</span>
+        </a>
+        <a href="/uap-aklan-admin/history.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Chapter History</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="p-4 border-t border-[#D2B866]/20 bg-[#031C15]">
+      <a href="/uap-aklan-admin/login.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-red-400 hover:bg-red-950/40 hover:text-red-300 transition"><span>Logout</span></a>
+    </div>
+  </aside>
+
+  <div class="flex-1 lg:pl-64 flex flex-col min-h-screen">
+    <header class="h-16 bg-[#062E23] border-b border-[#D2B866]/20 px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30">
+      <div class="flex items-center gap-4">
+        <button id="admin-sidebar-toggle" class="lg:hidden text-[#D2B866] hover:text-white p-2 rounded-md">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+        <span class="text-xs font-semibold uppercase tracking-widest text-[#D2B866]">Admin Panel</span>
+      </div>
+      <a href="/governance.html#resolutions" target="_blank" class="text-xs text-gray-300 hover:text-[#D2B866] transition">View Public Page</a>
+    </header>
+
+    <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-6">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-bold uppercase tracking-wider text-white">Governance — Resolutions</h1>
+        <p class="text-sm text-gray-400 mt-1">Manage the official Resolutions text and image content.</p>
+      </div>
+
+      <div class="rounded-xl border border-[#D2B866]/20 bg-[#0C2D22] p-6 shadow-xl space-y-4 max-w-4xl">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-[#D2B866]">Resolutions Content</h2>
+        
+        <div id="governanceError" class="hidden rounded-md border border-red-500/40 bg-red-950/60 p-3 text-xs text-red-300"></div>
+        <div id="governanceSuccess" class="hidden rounded-md border border-emerald-500/40 bg-emerald-950/60 p-3 text-xs text-emerald-300">Saved successfully.</div>
+
+        <form id="governanceForm" class="space-y-4">
+          <div>
+            <label for="governanceContent" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">Resolution Text</label>
+            <textarea id="governanceContent" rows="6" placeholder="Enter resolution details or description..." class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] p-4 text-sm text-gray-200 leading-relaxed focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866]"></textarea>
+          </div>
+
+          <div>
+            <label for="governanceImage" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">Resolution Image (Optional for update)</label>
+            <input type="file" id="governanceImage" accept="image/*" class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] p-2 text-xs text-gray-300 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-[#0A3428] file:text-[#D2B866]" />
+            <div id="governanceImagePreview" class="mt-2 text-xs text-gray-400"></div>
+          </div>
+
+          <div>
+            <label for="governanceLink" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">Link (Optional)</label>
+            <input type="url" id="governanceLink" placeholder="https://..." class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] px-4 py-2.5 text-sm text-white focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866]" />
+          </div>
+
+          <div class="flex justify-end pt-2">
+            <button type="submit" id="governanceSubmit" class="px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-md border border-[#D2B866] bg-[#0E3A2D] text-[#D2B866] hover:bg-[#124132] hover:text-white transition">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="/assets/js/admin.js"></script>
+  <script type="module" src="/assets/js/admin-governance.js"></script>
+</body>
+</html>
