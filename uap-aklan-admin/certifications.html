@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Accreditations Management - UAP Aklan Chapter Admin." />
-  <title>Accreditations | Admin UAP Aklan</title>
+  <meta name="description" content="Certifications Management - UAP Aklan Chapter Admin." />
+  <title>Certifications | Admin UAP Aklan</title>
   <link rel="icon" type="image/png" href="/assets/img/uap-aklan-logo.jpg" />
   <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
@@ -23,8 +23,7 @@
       </button>
     </div>
 
-    
-        <!-- Navigation Links -->
+    <!-- Navigation Links -->
     <div class="flex-1 overflow-y-auto">
             <nav class="p-4 space-y-1">
         <a href="/uap-aklan-admin/dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
@@ -71,18 +70,16 @@
           <span>Governance</span>
         </a>
 
-        <a href="/uap-aklan-admin/accreditations.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold bg-[#0A3428] text-[#D2B866] border border-[#D2B866]/30 shadow-sm">
+        <a href="/uap-aklan-admin/accreditations.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
           <span>Accreditations</span>
         </a>
 
-        <a href="/uap-aklan-admin/certifications.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+        <a href="/uap-aklan-admin/certifications.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold bg-[#0A3428] text-[#D2B866] border border-[#D2B866]/30 shadow-sm">
           <span>Certifications</span>
         </a>
       </nav>
     </div>
       
-    
-    
     <div class="p-4 border-t border-[#D2B866]/20 bg-[#031C15]">
       <a href="/uap-aklan-admin/login.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-red-400 hover:bg-red-950/40 hover:text-red-300 transition"><span>Logout</span></a>
     </div>
@@ -96,55 +93,55 @@
         </button>
         <span class="text-xs font-semibold uppercase tracking-widest text-[#D2B866]">Admin Panel</span>
       </div>
-      <a href="/governance.html#accreditations" target="_blank" class="text-xs text-gray-300 hover:text-[#D2B866] transition">View Public Page</a>
+      <a href="/governance.html#certifications" target="_blank" class="text-xs text-gray-300 hover:text-[#D2B866] transition">View Public Page</a>
     </header>
 
     <main class="flex-1 p-4 sm:p-6 lg:p-8 space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 class="text-2xl sm:text-3xl font-bold uppercase tracking-wider text-white">Accreditations Gallery</h1>
-          <p class="text-sm text-gray-400 mt-1">Upload and manage accreditation images for the public Pinterest gallery.</p>
+          <h1 class="text-2xl sm:text-3xl font-bold uppercase tracking-wider text-white">Certifications Gallery</h1>
+          <p class="text-sm text-gray-400 mt-1">Upload and manage certification images for the public Pinterest gallery.</p>
         </div>
-        <button type="button" data-modal-open="accreditationModal" class="px-4 py-2.5 rounded-lg border border-[#D2B866] bg-[#0E3A2D] text-xs font-bold uppercase tracking-widest text-[#D2B866] hover:bg-[#124132] hover:text-white transition flex items-center justify-center gap-2">
-          <span>+ Upload Accreditation</span>
+        <button type="button" data-modal-open="certificationModal" class="px-4 py-2.5 rounded-lg border border-[#D2B866] bg-[#0E3A2D] text-xs font-bold uppercase tracking-widest text-[#D2B866] hover:bg-[#124132] hover:text-white transition flex items-center justify-center gap-2">
+          <span>+ Upload Certification</span>
         </button>
       </div>
 
-      <div id="adminAccreditationsGrid" class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6"></div>
+      <div id="adminCertificationsGrid" class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6"></div>
     </main>
   </div>
 
   <!-- Upload Modal -->
-  <div id="accreditationModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden overflow-y-auto">
+  <div id="certificationModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden overflow-y-auto">
     <div class="bg-[#0C2D22] border border-[#D2B866]/30 rounded-xl p-6 w-full max-w-lg shadow-2xl relative my-8">
       <div class="flex items-center justify-between border-b border-[#D2B866]/20 pb-4 mb-4">
-        <h3 class="text-lg font-bold uppercase text-[#D2B866] tracking-wider">Upload Accreditation Image</h3>
-        <button type="button" data-modal-close="accreditationModal" class="text-gray-400 hover:text-white text-xl font-bold">&times;</button>
+        <h3 class="text-lg font-bold uppercase text-[#D2B866] tracking-wider">Upload Certification Image</h3>
+        <button type="button" data-modal-close="certificationModal" class="text-gray-400 hover:text-white text-xl font-bold">&times;</button>
       </div>
 
-      <div id="accreditationError" class="hidden mb-4 rounded-md border border-red-500/40 bg-red-950/60 p-3 text-xs text-red-300"></div>
-      <div id="accreditationSuccess" class="hidden mb-4 rounded-md border border-emerald-500/40 bg-emerald-950/60 p-3 text-xs text-emerald-300">Uploaded successfully.</div>
+      <div id="certificationError" class="hidden mb-4 rounded-md border border-red-500/40 bg-red-950/60 p-3 text-xs text-red-300"></div>
+      <div id="certificationSuccess" class="hidden mb-4 rounded-md border border-emerald-500/40 bg-emerald-950/60 p-3 text-xs text-emerald-300">Uploaded successfully.</div>
 
-      <form id="accreditationForm" class="space-y-4">
+      <form id="certificationForm" class="space-y-4">
         <div>
-          <label for="accreditationImage" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">Select Image</label>
-          <input type="file" id="accreditationImage" accept="image/*" class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] p-2 text-xs text-gray-300 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-[#0A3428] file:text-[#D2B866]" required />
+          <label for="certificationImage" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">Select Image</label>
+          <input type="file" id="certificationImage" accept="image/*" class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] p-2 text-xs text-gray-300 file:mr-3 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-[#0A3428] file:text-[#D2B866]" required />
         </div>
 
         <div>
-          <label for="accreditationDisplayOrder" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">Display Order</label>
-          <input type="number" id="accreditationDisplayOrder" min="1" class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] px-3.5 py-2 text-sm text-white focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866]" required />
+          <label for="certificationDisplayOrder" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">Display Order</label>
+          <input type="number" id="certificationDisplayOrder" min="1" class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] px-3.5 py-2 text-sm text-white focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866]" required />
         </div>
 
         <div class="flex justify-end gap-3 pt-4 border-t border-[#D2B866]/20">
-          <button type="button" data-modal-close="accreditationModal" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white">Cancel</button>
-          <button type="submit" id="accreditationSubmit" class="px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-md border border-[#D2B866] bg-[#0E3A2D] text-[#D2B866] hover:bg-[#124132] hover:text-white transition">Upload Image</button>
+          <button type="button" data-modal-close="certificationModal" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white">Cancel</button>
+          <button type="submit" id="certificationSubmit" class="px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-md border border-[#D2B866] bg-[#0E3A2D] text-[#D2B866] hover:bg-[#124132] hover:text-white transition">Upload Image</button>
         </div>
       </form>
     </div>
   </div>
 
   <script type="module" src="/assets/js/admin.js"></script>
-  <script type="module" src="/assets/js/admin-accreditations.js"></script>
+  <script type="module" src="/assets/js/admin-certifications.js"></script>
 </body>
 </html>

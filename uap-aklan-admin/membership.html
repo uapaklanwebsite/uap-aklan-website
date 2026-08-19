@@ -24,17 +24,21 @@
     </div>
         <!-- Navigation Links -->
     <div class="flex-1 overflow-y-auto">
-      <nav class="p-4 space-y-1">
+            <nav class="p-4 space-y-1">
         <a href="/uap-aklan-admin/dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
           <span>Dashboard</span>
         </a>
 
-        <a href="/uap-aklan-admin/members.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
-          <span>Members</span>
+        <a href="/uap-aklan-admin/site-content.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Home & About</span>
         </a>
 
         <a href="/uap-aklan-admin/officers.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
           <span>Officers</span>
+        </a>
+
+        <a href="/uap-aklan-admin/members.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Members</span>
         </a>
 
         <a href="/uap-aklan-admin/gallery.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
@@ -45,28 +49,32 @@
           <span>Activities</span>
         </a>
 
-
-        <a href="/uap-aklan-admin/site-content.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
-          <span>Home &amp; About</span>
+        <a href="/uap-aklan-admin/history.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Chapter History</span>
         </a>
 
         <a href="/uap-aklan-admin/awards.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
           <span>Awards</span>
         </a>
+
         <a href="/uap-aklan-admin/membership.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold bg-[#0A3428] text-[#D2B866] border border-[#D2B866]/30 shadow-sm">
           <span>Membership</span>
         </a>
+
         <a href="/uap-aklan-admin/dues.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
           <span>Pay Your Dues</span>
         </a>
+
         <a href="/uap-aklan-admin/governance.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
           <span>Governance</span>
         </a>
+
         <a href="/uap-aklan-admin/accreditations.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
           <span>Accreditations</span>
         </a>
-        <a href="/uap-aklan-admin/history.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
-          <span>Chapter History</span>
+
+        <a href="/uap-aklan-admin/certifications.html" class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-gray-300 hover:bg-[#0A3428] hover:text-[#D2B866] transition">
+          <span>Certifications</span>
         </a>
       </nav>
     </div>
@@ -99,6 +107,21 @@
       </div>
 
       <div id="adminMembershipContainer" class="space-y-6 max-w-5xl"></div>
+
+      <!-- Need Help Links Section -->
+      <div class="space-y-6 max-w-5xl pt-6 border-t border-[#D2B866]/20">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold uppercase tracking-wider text-[#D2B866]">Need Help Links</h2>
+            <p class="text-xs text-gray-400 mt-0.5">Manage contact buttons displayed under Membership Need Help section.</p>
+          </div>
+          <button type="button" data-modal-open="membershipHelpModal" class="px-4 py-2.5 rounded-lg border border-[#D2B866] bg-[#0E3A2D] text-xs font-bold uppercase tracking-widest text-[#D2B866] hover:bg-[#124132] hover:text-white transition flex items-center justify-center gap-2">
+            <span>+ Add Help Link</span>
+          </button>
+        </div>
+
+        <div id="adminMembershipHelpContainer" class="space-y-4"></div>
+      </div>
     </main>
   </div>
 
@@ -145,6 +168,43 @@
         <div class="flex justify-end gap-3 pt-4 border-t border-[#D2B866]/20">
           <button type="button" data-modal-close="membershipSectionModal" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white">Cancel</button>
           <button type="submit" id="membershipSubmitBtn" class="px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-md border border-[#D2B866] bg-[#0E3A2D] text-[#D2B866] hover:bg-[#124132] hover:text-white transition">Save Section</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Membership Need Help Link Modal -->
+  <div id="membershipHelpModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm hidden overflow-y-auto">
+    <div class="bg-[#0C2D22] border border-[#D2B866]/30 rounded-xl p-6 w-full max-w-lg shadow-2xl relative my-8">
+      <div class="flex items-center justify-between border-b border-[#D2B866]/20 pb-4 mb-4">
+        <h3 id="membershipHelpModalTitle" class="text-lg font-bold uppercase text-[#D2B866] tracking-wider">Add Help Link</h3>
+        <button type="button" data-modal-close="membershipHelpModal" class="text-gray-400 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+
+      <div id="membershipHelpModalError" class="hidden mb-4 rounded-md border border-red-500/40 bg-red-950/60 p-3 text-xs text-red-300"></div>
+      <div id="membershipHelpModalSuccess" class="hidden mb-4 rounded-md border border-emerald-500/40 bg-emerald-950/60 p-3 text-xs text-emerald-300">Saved successfully.</div>
+
+      <form id="membershipHelpForm" class="space-y-4">
+        <input type="hidden" id="membershipHelpId" value="" />
+
+        <div>
+          <label for="membershipHelpTitle" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">Title</label>
+          <input type="text" id="membershipHelpTitle" placeholder="e.g. Secretary, Treasurer" class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] px-3.5 py-2 text-sm text-white focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866]" required />
+        </div>
+
+        <div>
+          <label for="membershipHelpLink" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">Link URL</label>
+          <input type="url" id="membershipHelpLink" placeholder="https://..." class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] px-3.5 py-2 text-sm text-white focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866]" required />
+        </div>
+
+        <div>
+          <label for="membershipHelpDisplayOrder" class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1">Display Order</label>
+          <input type="number" id="membershipHelpDisplayOrder" min="1" class="w-full rounded-md border border-[#D2B866]/20 bg-[#062E23] px-3.5 py-2 text-sm text-white focus:border-[#D2B866] focus:outline-none focus:ring-1 focus:ring-[#D2B866]" required />
+        </div>
+
+        <div class="flex justify-end gap-3 pt-4 border-t border-[#D2B866]/20">
+          <button type="button" data-modal-close="membershipHelpModal" class="px-4 py-2 text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-white">Cancel</button>
+          <button type="submit" id="membershipHelpSubmitBtn" class="px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-md border border-[#D2B866] bg-[#0E3A2D] text-[#D2B866] hover:bg-[#124132] hover:text-white transition">Save Help Link</button>
         </div>
       </form>
     </div>

@@ -1,9 +1,12 @@
 import { getMembershipSections, addMembershipSection, updateMembershipSection, deleteMembershipSection } from './membership-db.js';
+import { getMembershipHelpLinks, addMembershipHelpLink, updateMembershipHelpLink, deleteMembershipHelpLink } from './membership-need-help-db.js';
 import { uploadImage, deleteImage, getPublicUrl } from './storage.js';
 import { openModal, closeModal } from './admin.js';
 import { loadingHtml, setButtonLoading, resetButton } from './ui-utils.js';
+import { escapeHtml } from './member-utils.js';
 
 let currentSections = [];
+let currentHelpLinks = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   initAdminMembership();
@@ -273,5 +276,207 @@ async function initAdminMembership() {
     });
   }
 
+  async function loadHelpLinks() {
+    const helpContainer = document.getElementById('adminMembershipHelpContainer');
+    if (helpContainer) {
+      helpContainer.innerHTML = loadingHtml('Loading help links...');
+    }
+
+    try {
+      currentHelpLinks = await getMembershipHelpLinks();
+      renderHelpLinks(currentHelpLinks);
+    } catch (err) {
+      console.error('[Admin Membership] Error loading help links:', err);
+      if (helpContainer) {
+        helpContainer.innerHTML = `<div class="text-center text-red-400 py-4">Error loading help links.</div>`;
+      }
+    }
+  }
+
+  function renderHelpLinks(items) {
+    const helpContainer = document.getElementById('adminMembershipHelpContainer');
+    if (!helpContainer) return;
+
+    if (!items || items.length === 0) {
+      helpContainer.innerHTML = `<div class="text-center text-gray-400 py-4">No help links available.</div>`;
+      return;
+    }
+
+    helpContainer.innerHTML = items.map((item) => `
+      <div class="rounded-xl border border-[#D2B866]/20 bg-[#0C2D22] p-4 shadow flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold px-2 py-0.5 rounded border border-[#D2B866]/30 bg-[#062E23] text-[#D2B866]">
+              Order #${item.display_order}
+            </span>
+            <h4 class="text-base font-bold text-white">${escapeHtml(item.title)}</h4>
+          </div>
+          <p class="text-xs text-gray-300 break-all"><span class="text-gray-500 font-semibold">Link:</span> ${escapeHtml(item.link)}</p>
+        </div>
+
+        <div class="flex items-center gap-2 self-end sm:self-center">
+          <button type="button" data-edit-help-id="${item.id}" class="px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded border border-[#D2B866]/40 text-[#D2B866] hover:bg-[#0A3428] hover:text-white transition">Edit</button>
+          <button type="button" data-delete-help-id="${item.id}" class="px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded border border-red-500/30 text-red-400 hover:bg-red-950/40 transition">Delete</button>
+        </div>
+      </div>
+    `).join('');
+
+    helpContainer.querySelectorAll('[data-edit-help-id]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-edit-help-id');
+        openEditHelpModal(id);
+      });
+    });
+
+    helpContainer.querySelectorAll('[data-delete-help-id]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-delete-help-id');
+        handleDeleteHelp(id, btn);
+      });
+    });
+  }
+
+  function openEditHelpModal(id) {
+    const item = currentHelpLinks.find((h) => h.id === id);
+    if (!item) return;
+
+    const helpModalTitle = document.getElementById('membershipHelpModalTitle');
+    const helpSubmitBtn = document.getElementById('membershipHelpSubmitBtn');
+    const helpIdInput = document.getElementById('membershipHelpId');
+    const titleInput = document.getElementById('membershipHelpTitle');
+    const linkInput = document.getElementById('membershipHelpLink');
+    const orderInput = document.getElementById('membershipHelpDisplayOrder');
+    const helpErrorMsg = document.getElementById('membershipHelpModalError');
+    const helpSuccessMsg = document.getElementById('membershipHelpModalSuccess');
+
+    if (helpErrorMsg) helpErrorMsg.classList.add('hidden');
+    if (helpSuccessMsg) helpSuccessMsg.classList.add('hidden');
+
+    if (helpModalTitle) helpModalTitle.innerText = 'Edit Help Link';
+    if (helpIdInput) helpIdInput.value = item.id;
+    if (titleInput) titleInput.value = item.title;
+    if (linkInput) linkInput.value = item.link;
+    if (orderInput) orderInput.value = item.display_order;
+
+    if (helpSubmitBtn) helpSubmitBtn.innerText = 'Save Changes';
+    openModal('membershipHelpModal');
+  }
+
+  async function handleDeleteHelp(id, btn) {
+    const item = currentHelpLinks.find((h) => h.id === id);
+    if (!item) return;
+
+    if (!confirm(`Are you sure you want to delete the "${item.title}" help link?`)) return;
+
+    const originalText = btn.innerText;
+    setButtonLoading(btn, 'Deleting...');
+
+    try {
+      await deleteMembershipHelpLink(id);
+      await loadHelpLinks();
+    } catch (err) {
+      console.error('[Admin Membership] Delete help link error:', err);
+      alert('Unable to delete this item. Please try again.');
+      resetButton(btn, originalText);
+    }
+  }
+
+  function setupHelpForm() {
+    const helpForm = document.getElementById('membershipHelpForm');
+    const helpModalTitle = document.getElementById('membershipHelpModalTitle');
+    const helpSubmitBtn = document.getElementById('membershipHelpSubmitBtn');
+    const helpIdInput = document.getElementById('membershipHelpId');
+    const titleInput = document.getElementById('membershipHelpTitle');
+    const linkInput = document.getElementById('membershipHelpLink');
+    const orderInput = document.getElementById('membershipHelpDisplayOrder');
+    const helpErrorMsg = document.getElementById('membershipHelpModalError');
+    const helpSuccessMsg = document.getElementById('membershipHelpModalSuccess');
+
+    if (helpForm) {
+      helpForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (helpErrorMsg) helpErrorMsg.classList.add('hidden');
+        if (helpSuccessMsg) helpSuccessMsg.classList.add('hidden');
+
+        const id = helpIdInput.value;
+        const title = titleInput.value.trim();
+        const link = linkInput.value.trim();
+        const displayOrder = parseInt(orderInput.value, 10) || (currentHelpLinks.length + 1);
+
+        if (!title) {
+          if (helpErrorMsg) {
+            helpErrorMsg.innerText = 'Please enter a title.';
+            helpErrorMsg.classList.remove('hidden');
+          }
+          return;
+        }
+
+        if (!link) {
+          if (helpErrorMsg) {
+            helpErrorMsg.innerText = 'Please enter a valid link.';
+            helpErrorMsg.classList.remove('hidden');
+          }
+          return;
+        }
+
+        try {
+          new URL(link);
+        } catch (_) {
+          if (helpErrorMsg) {
+            helpErrorMsg.innerText = 'Please enter a valid link.';
+            helpErrorMsg.classList.remove('hidden');
+          }
+          return;
+        }
+
+        setButtonLoading(helpSubmitBtn, 'Saving...');
+
+        try {
+          if (id) {
+            await updateMembershipHelpLink(id, { title, link, display_order: displayOrder });
+          } else {
+            await addMembershipHelpLink({ title, link, display_order: displayOrder });
+          }
+
+          if (helpSuccessMsg) {
+            helpSuccessMsg.innerText = id ? 'Help link updated successfully!' : 'Help link added successfully!';
+            helpSuccessMsg.classList.remove('hidden');
+          }
+
+          setTimeout(() => {
+            helpForm.reset();
+            if (helpIdInput) helpIdInput.value = '';
+            resetButton(helpSubmitBtn, 'Save Help Link');
+            closeModal('membershipHelpModal');
+            if (helpSuccessMsg) helpSuccessMsg.classList.add('hidden');
+            loadHelpLinks();
+          }, 800);
+        } catch (err) {
+          console.error('[Admin Membership] Save help link error:', err);
+          if (helpErrorMsg) {
+            helpErrorMsg.innerText = 'Unable to save the information. Please try again.';
+            helpErrorMsg.classList.remove('hidden');
+          }
+          resetButton(helpSubmitBtn, id ? 'Save Changes' : 'Save Help Link');
+        }
+      });
+    }
+
+    const addHelpBtn = document.querySelector('[data-modal-open="membershipHelpModal"]');
+    if (addHelpBtn) {
+      addHelpBtn.addEventListener('click', () => {
+        helpForm.reset();
+        if (helpIdInput) helpIdInput.value = '';
+        if (helpModalTitle) helpModalTitle.innerText = 'Add Help Link';
+        if (orderInput) orderInput.value = currentHelpLinks.length + 1;
+        if (helpSubmitBtn) helpSubmitBtn.innerText = 'Save Help Link';
+        if (helpErrorMsg) helpErrorMsg.classList.add('hidden');
+        if (helpSuccessMsg) helpSuccessMsg.classList.add('hidden');
+      });
+    }
+  }
+
   loadSections();
+  loadHelpLinks();
+  setupHelpForm();
 }

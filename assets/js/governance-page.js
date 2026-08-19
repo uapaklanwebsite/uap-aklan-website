@@ -1,5 +1,6 @@
 import { getGovernanceResolution } from './governance-db.js';
 import { getAccreditations } from './accreditations-db.js';
+import { getCertifications } from './certifications-db.js';
 import { getPublicUrl } from './storage.js';
 import { loadingHtml } from './ui-utils.js';
 import { escapeHtml } from './member-utils.js';
@@ -11,7 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
 async function initPublicGovernancePage() {
   await Promise.all([
     loadPublicResolution(),
-    loadPublicAccreditations()
+    loadPublicAccreditations(),
+    loadPublicCertifications()
   ]);
 }
 
@@ -122,3 +124,49 @@ async function loadPublicAccreditations() {
     `;
   }
 }
+
+async function loadPublicCertifications() {
+  const container = document.getElementById('certificationsGallery');
+  if (!container) return;
+
+  container.innerHTML = loadingHtml('Loading certifications...');
+
+  try {
+    const certifications = await getCertifications();
+
+    if (!certifications || certifications.length === 0) {
+      container.innerHTML = `
+        <div class="py-8 text-center text-gray-400 font-medium col-span-full w-full">
+          No certification images available.
+        </div>
+      `;
+      return;
+    }
+
+    container.className = 'columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6 space-y-6';
+
+    container.innerHTML = certifications.map((item) => {
+      const publicUrl = getPublicUrl('certifications', item.image_path);
+      return `
+        <div class="break-inside-avoid mb-6">
+          <div class="group overflow-hidden rounded-xl border border-[#D4AF37]/20 bg-[#0C2D22] p-3 shadow-lg transition duration-300 hover:-translate-y-1 hover:border-[#D4AF37]">
+            <img
+              src="${publicUrl}"
+              alt="Certification"
+              class="w-full h-auto object-contain rounded"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch (err) {
+    console.error('[Public Governance] Error loading certifications:', err);
+    container.innerHTML = `
+      <div class="py-8 text-center text-red-400 font-medium">
+        Unable to load the content. Please refresh the page.
+      </div>
+    `;
+  }
+}
+

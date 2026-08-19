@@ -1,4 +1,5 @@
 import { getMembershipSections } from './membership-db.js';
+import { getMembershipHelpLinks } from './membership-need-help-db.js';
 import { getPublicUrl } from './storage.js';
 import { loadingHtml } from './ui-utils.js';
 import { escapeHtml } from './member-utils.js';
@@ -14,12 +15,15 @@ async function initPublicMembership() {
   pageContainer.innerHTML = loadingHtml('Loading membership sections...');
 
   try {
-    const sections = await getMembershipSections();
+    const [sections, helpLinks] = await Promise.all([
+      getMembershipSections(),
+      getMembershipHelpLinks()
+    ]);
 
-    if (!sections || sections.length === 0) {
+    if ((!sections || sections.length === 0) && (!helpLinks || helpLinks.length === 0)) {
       pageContainer.innerHTML = `
         <div class="mx-auto max-w-7xl px-6 lg:px-8 py-20 text-center">
-          <p class="text-xl text-gray-400">No membership sections available at this time.</p>
+          <p class="text-xl text-gray-400">No membership information available at this time.</p>
         </div>
       `;
       return;
@@ -40,6 +44,9 @@ async function initPublicMembership() {
           </div>
 
           <div class="mx-auto flex max-w-xl flex-col gap-6 py-10">
+            <a href="#need-help" class="group rounded border border-[#D4AF37]/20 bg-[#0E3A2D] py-6 text-center font-bold uppercase tracking-widest text-white transition duration-300 hover:border-[#D4AF37] hover:bg-[#124132]">
+              Need Help?
+            </a>
             ${sections.map((sec) => {
               const anchor = sec.section_name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
               return `
@@ -53,11 +60,41 @@ async function initPublicMembership() {
       </section>
     `;
 
+    // Render Need Help section first (above others)
+    html += `
+      <section id="need-help" class="bg-gradient-to-b from-[#030C09] via-[#0D3628] to-[#030C09] py-20 lg:py-28 border-y border-[#D2B866]">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8 space-y-8">
+          <div class="flex items-center gap-4">
+            <span class="text-xs font-semibold tracking-[0.25em] text-[#D2B866]">4.1</span>
+            <div class="h-px w-14 bg-[#D2B866]"></div>
+            <h2 class="text-2xl sm:text-3xl font-semibold uppercase tracking-[0.15em] text-[#D2B866]">
+              Need Help?
+            </h2>
+          </div>
+
+          ${(!helpLinks || helpLinks.length === 0) ? `
+            <div class="text-center text-gray-400 py-8">No help contacts available at this time.</div>
+          ` : `
+            <div class="mx-auto flex max-w-xl flex-col gap-4 py-4">
+              ${helpLinks.map((h) => `
+                <a href="${h.link}" target="_blank" rel="noopener noreferrer" class="group rounded border border-[#D4AF37]/30 bg-[#0E3A2D] py-4 px-6 text-center font-bold uppercase tracking-widest text-[#D2B866] transition duration-300 hover:border-[#D4AF37] hover:bg-[#124132] hover:text-white flex items-center justify-center gap-2 shadow-lg">
+                  <span>${escapeHtml(h.title)}</span>
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              `).join('')}
+            </div>
+          `}
+        </div>
+      </section>
+    `;
+
     // Render individual detailed sections
     sections.forEach((sec, idx) => {
       const anchor = sec.section_name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       const publicUrl = sec.image_path ? getPublicUrl('membership', sec.image_path) : null;
-      const subNumber = `4.${idx + 1}`;
+      const subNumber = `4.${idx + 2}`;
 
       html += `
         <section id="${anchor}" class="bg-gradient-to-b from-[#030C09] via-[#0D3628] to-[#030C09] py-20 lg:py-28 border-y border-[#D2B866]">
