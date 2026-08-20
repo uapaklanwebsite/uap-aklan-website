@@ -1,6 +1,3 @@
-Sure — here's a **compressed, single Markdown block** you can copy directly into `README.md`:
-
-````md
 # UAP Aklan Website
 
 Official website and content management system for the **United Architects of the Philippines – Aklan Chapter**.
