@@ -32,6 +32,7 @@ export default defineConfig({
         adminDues: resolve(import.meta.dirname, 'uap-aklan-admin/dues.html'),
         adminGovernance: resolve(import.meta.dirname, 'uap-aklan-admin/governance.html'),
         adminAccreditations: resolve(import.meta.dirname, 'uap-aklan-admin/accreditations.html'),
+        adminCertifications: resolve(import.meta.dirname, 'uap-aklan-admin/certifications.html'),
       },
     },
   },
